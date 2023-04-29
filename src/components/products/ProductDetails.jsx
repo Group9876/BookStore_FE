@@ -97,7 +97,6 @@ class ProductDetails extends React.Component {
         if (this.state.productId) {
             return (<>
                     <Header/>
-
                     <div className='containerProductDetailsWithCondition'>
                         {this.state.statusCode === 200 ? (<div className='containerProductDetails'>
                             <div className='pictures'>

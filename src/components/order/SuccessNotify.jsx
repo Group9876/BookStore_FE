@@ -14,7 +14,8 @@ class SuccessNotify extends React.Component {
 
     render() {
         if (role === "ROLE_CUSTOMER") {
-            return (
+            return ( <>
+            <Header/>
                 <div className="boxinnotif">
                     <div className="mess">
                         <h4>Order succesfully!</h4>
@@ -24,6 +25,8 @@ class SuccessNotify extends React.Component {
                     </div>
 
                 </div>
+                <Footer/>
+                </>
             )
         } else {
             return (

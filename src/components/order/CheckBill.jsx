@@ -51,8 +51,8 @@ class CheckBill extends React.Component {
 
     render() {
         // if (role === "ROLE_USER") {
-            return (
-
+            return (<>
+                <Header/>
                 <div className="container">
                     <div className="title">
                         <h3>Confirm order information</h3></div>
@@ -79,7 +79,7 @@ class CheckBill extends React.Component {
                                 <p className="total">{item.quantity * item.price} $</p>
                             </div>)}
                         <div className="amount">
-                            <h5>Total: $</h5>
+                            <h5>Total: {this.state.total} $</h5>
                         </div>
                         <div className="amount">
                             <h5>Payment: {this.state.dataToCheckout.paymentMethod}</h5>
@@ -91,6 +91,8 @@ class CheckBill extends React.Component {
                     </div>
 
                 </div>
+                <Footer/>
+                </>
             )
         // } else {
         //     return (

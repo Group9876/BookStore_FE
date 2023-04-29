@@ -108,7 +108,8 @@ class CheckoutOrder extends React.Component {
     }
 
     render() {
-        return (
+        return (<>
+            <Header/>
             <div className="checkoutContainer">
                 <div className="userInfo">
                     <h3>Checkout information</h3>
@@ -167,6 +168,8 @@ class CheckoutOrder extends React.Component {
 
                     </div>
                 </div>
+                <Footer/>
+                </>
             )
     //     } else {
     //         return (
