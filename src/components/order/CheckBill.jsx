@@ -76,7 +76,7 @@ class CheckBill extends React.Component {
                                 <p>{item.name}</p>
                                 <h6>{item.price} $</h6>
                                 <p className="quantity_order">Quantity: {item.quantity}</p>
-                                <p className="total">{item.quantity * item.price} $</p>
+                                <p className="total">{(item.quantity * item.price).toFixed(2)} $</p>
                             </div>)}
                         <div className="amount">
                             <h5>Total: {this.state.total} $</h5>

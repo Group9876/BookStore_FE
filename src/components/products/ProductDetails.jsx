@@ -87,7 +87,7 @@ class ProductDetails extends React.Component {
         data.quantity = this.state.count
         console.log(this.state.count)
         const itemList = [data]
-        localStorage.setItem("total", this.state.count * this.state.price)
+        localStorage.setItem("total", (this.state.count * this.state.price).toFixed(1))
         localStorage.setItem("items", JSON.stringify(itemList));
         
         window.location.href = `${fe_url}order/${userId}`;

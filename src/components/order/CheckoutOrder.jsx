@@ -146,7 +146,7 @@ class CheckoutOrder extends React.Component {
                             {this.state.items.map(item =>
                                 <div className="contentProductInfo" key={item.productId}>
                                     <img src={item.images[0]} alt="product"></img>
-                                    <h4>{item.name}</h4>
+                                    <p className="nameincheckout">{item.name}</p>
                                     <p>{item.price} $</p>
                                     <p className="quantity_order">Quantity: {item.quantity}</p>
                                 </div>)}

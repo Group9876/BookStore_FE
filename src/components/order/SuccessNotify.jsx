@@ -12,6 +12,10 @@ class SuccessNotify extends React.Component {
         window.location.href = fe_url
     }
 
+    handleViewOrder = () => {
+        window.location.href = fe_url + "order"
+    }
+
     render() {
         if (role === "ROLE_CUSTOMER") {
             return ( <>
@@ -20,11 +24,13 @@ class SuccessNotify extends React.Component {
                     <div className="mess">
                         <h4>Order succesfully!</h4>
                     </div>
+                   
                     <div className="mess">
                         <button onClick={this.handleContinue}>Continue shopping</button>
                     </div>
-
                 </div>
+
+             
                 <Footer/>
                 </>
             )

@@ -59,8 +59,8 @@ class HeaderWithNavigate extends Component {
                         : <nav className='ml-auto'>
                             <span className="logout"
                                   onClick={this.logout}>&nbsp;&nbsp;&nbsp;&nbsp;Logout&nbsp;&nbsp;</span>|
-                            <a href='/login'>&nbsp;Re-login&nbsp;&nbsp;</a>|
-                            <a href='/register'>&nbsp;Re-register&nbsp&nbsp</a>
+                            <a href='/login'>&nbsp;Re-login&nbsp;&nbsp;</a>
+                            
                         </nav>
                     }
                 </div>

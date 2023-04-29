@@ -158,5 +158,7 @@ button:hover {
     border-color: #33cc33;
     border-image-width: 1px;
 }
-
+.nameincheckout{
+    font-weight: bold;
+}
  
