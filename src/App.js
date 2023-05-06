@@ -11,14 +11,12 @@ import UpdateCustomer from "./components/customer/customerProfile/UpdateCustomer
 import ProductsByCategory from './components/products/ProductsByCategory';
 import ShoppingCart from './components/customer/cart/ShoppingCart'
 import CheckoutOrder from './components/order/CheckoutOrder';
-import OrderByStatus from './components/order/OrderByStatus';
 import CheckBill from './components/order/CheckBill';
 import SuccessNotify from './components/order/SuccessNotify';
 import VoucherAdd from "./components/admin/VoucherAdd";
 import AdminVouchers from "./components/admin/AdminVouchers";
 import AdminProducts from "./components/admin/AdminProducts";
 import AdminOrders from "./components/admin/AdminOrders";
-import Page404 from "./components/others/Page404";
 import NotFound from "./components/others/NotFound";
 
 
@@ -47,7 +45,8 @@ function App() {
                     <Route path='/order/:id' element={<CheckoutOrder/>}></Route>
                     <Route path="/my_profile" element={<UpdateCustomer/>}/>
                     <Route path="/bill" element={<CheckBill/>}/>
-                    <Route path="/*" element={<NotFound title='(╥﹏╥) 404 error: Page not found!' details='We cannot find this page, please try again later!'/>}/>
+                    <Route path="/*" element={<NotFound title='(╥﹏╥) 404 error: Page not found!'
+                                                        details='We cannot find this page, please try again later!'/>}/>
                 </Routes>
             </div>
         </Router>

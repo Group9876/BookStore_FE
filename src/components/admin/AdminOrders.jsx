@@ -1,5 +1,5 @@
 import React from "react";
-import req, { be_url, fe_url, role } from "../others/Share";
+import req, {be_url, fe_url, role} from "../others/Share";
 import withRouter from '../products/WithRouter';
 import Header from "../header/Header";
 import NotFound from "../others/NotFound";
@@ -19,7 +19,7 @@ class OrderByStatus extends React.Component {
     fetchOrderByStatus = () => {
         req.get(be_url + "order?status=" + this.state.status)
             .then((res) => {
-                this.setState({ orders: res.data })
+                this.setState({orders: res.data})
             })
             .catch((error) => {
                 console.log(error)
@@ -31,7 +31,7 @@ class OrderByStatus extends React.Component {
             this.fetchOrderByStatus();
         }
     }
-      
+
 
     handleUpdateStatus = async (id, fromStatus, toStatus) => {
         const body = {
@@ -44,7 +44,7 @@ class OrderByStatus extends React.Component {
                 const updatedOrders = [...this.state.orders];
                 const updatedOrderIndex = updatedOrders.findIndex(order => order.id === id);
                 updatedOrders[updatedOrderIndex].orderStatus = toStatus;
-                this.setState({ orders: updatedOrders });
+                this.setState({orders: updatedOrders});
                 this.fetchOrderByStatus();
             }
         } catch (error) {
@@ -62,7 +62,7 @@ class OrderByStatus extends React.Component {
                             <aside className="admin-aside">
                                 <div className="web-name">
                                     <a href={fe_url}><img className="admin-logo" src="/images/icon.jpg"
-                                        alt="logo" /><span>PRO BOOKSTORE</span></a>
+                                                          alt="logo"/><span>PRO BOOKSTORE</span></a>
                                 </div>
                                 <a className="admin-navigation" href={fe_url + "admin/products"}>Manage
                                     books</a>
@@ -73,7 +73,8 @@ class OrderByStatus extends React.Component {
                                         <a href={fe_url + "admin/orders?status=customer_confirmed"}>Checked out</a>
                                         <a href={fe_url + "admin/orders?status=admin_preparing"}>Preparing</a>
                                         <a href={fe_url + "admin/orders?status=shipping"}>Shipping</a>
-                                        <a href={fe_url + "admin/orders?status=customer_request_cancel"}>Cancel request</a>
+                                        <a href={fe_url + "admin/orders?status=customer_request_cancel"}>Cancel
+                                            request</a>
                                         <a href={fe_url + "admin/orders?status=success"}>Success</a>
                                     </div>
                                 </div>
@@ -84,22 +85,22 @@ class OrderByStatus extends React.Component {
                         <div className="col-9">
                             <article className="admin-header">
                                 <span className="welcome">Welcome ADMIN!</span>&nbsp;&nbsp;
-                                <span onClick={this.logout} className="bi bi-box-arrow-right" />
+                                <span onClick={this.logout} className="bi bi-box-arrow-right"/>
                             </article>
                             {/*admin*/}
                             <article className="admin-body">
                                 <h1 className="manager">Orders: {this.state.status}</h1>
                                 <table className="table-list">
                                     <thead className="product-detail">
-                                        <tr>
-                                            <th>Books information</th>
-                                            <th>Payment method</th>
-                                            <th>Total</th>
-                                            <th>Action</th>
-                                        </tr>
+                                    <tr>
+                                        <th>Books information</th>
+                                        <th>Payment method</th>
+                                        <th>Total</th>
+                                        <th>Action</th>
+                                    </tr>
                                     </thead>
                                     <tbody>
-                                        {this.state.orders.map(order =>
+                                    {this.state.orders.map(order =>
                                         (<tr key={order.id}>
                                             {order.items.map(item => (<tr className="item" key={item.productId}>
                                                 <td><img src={item.images[0]} alt="product"></img></td>
@@ -122,11 +123,11 @@ class OrderByStatus extends React.Component {
                                                 onClick={() => this.handleUpdateStatus(order.id, order.orderStatus, "customer_canceled")}>Cancel</button>}
 
                                         </tr>)
-                                        )}
+                                    )}
                                     </tbody>
                                     <tfoot>
-                                        <p className="book-available">{this.state.orders.length} order(s)
-                                            available</p>
+                                    <p className="book-available">{this.state.orders.length} order(s)
+                                        available</p>
                                     </tfoot>
                                 </table>
                             </article>
@@ -137,9 +138,9 @@ class OrderByStatus extends React.Component {
         } else {
             return (
                 <>
-                    <Header />
-                    <NotFound title='(╥﹏╥) Access denied!' details='You have no permission to access this page!' />
-                    <Footer />
+                    <Header/>
+                    <NotFound title='(╥﹏╥) Access denied!' details='You have no permission to access this page!'/>
+                    <Footer/>
                 </>
             )
         }

@@ -54,12 +54,12 @@ class CheckoutOrder extends React.Component {
         localStorage.setItem('total', localStorage.getItem("total"));
 
         req.post(be_url + "order/" + userId, dataToCheckout)
-        .then(()=> {
-            localStorage.removeItem("items")
-            // localStorage.removeItem("total")
-            // window.location.href = fe_url + "order?status=customer_confirmed"
-            window.location.href = fe_url + "bill"
-        })
+            .then(() => {
+                localStorage.removeItem("items")
+                // localStorage.removeItem("total")
+                // window.location.href = fe_url + "order?status=customer_confirmed"
+                window.location.href = fe_url + "bill"
+            })
             .catch((error) => {
                 console.log(error)
             })

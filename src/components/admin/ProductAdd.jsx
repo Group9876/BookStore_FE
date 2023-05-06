@@ -80,8 +80,12 @@ export default class ProductAdd extends React.Component {
                     window.location = "/admin/products";
                 }
             })
-            .catch(error => {
-                console.error(error);
+            .catch((error) => {
+                if (error.response.data.errors) {
+                    alert(error.response.data.errors[0].defaultMessage)
+                } else {
+                    alert(error.response.data.message)
+                }
             })
     }
 
@@ -100,7 +104,17 @@ export default class ProductAdd extends React.Component {
                                 </div>
                                 <a className="admin-navigation" href={fe_url + "admin/products"}>Manage
                                     books</a>
-                                <a className="admin-navigation" href={fe_url + "admin/orders"}>Manage orders</a>
+                                    <div className="dropdown">
+                                        <a className="admin-navigation" href={fe_url + "admin/orders"}>Manage
+                                            orders <i className="bi bi-chevron-down dropdown_icon"></i></a>
+                                        <div className="dropdown-content">
+                                            <a href={fe_url + "admin/orders?status=customer_confirmed"}>Checked out</a>
+                                            <a href={fe_url + "admin/orders?status=admin_preparing"}>Preparing</a>
+                                            <a href={fe_url + "admin/orders?status=shipping"}>Shipping</a>
+                                            <a href={fe_url + "admin/orders?status=customer_request_cancel"}>Cancel request</a>
+                                            <a href={fe_url + "admin/orders?status=success"}>Success</a>
+                                        </div>
+                                    </div>
                                 <a className="admin-navigation current-pos" href={fe_url + "admin/vouchers"}>Manage
                                     vouchers</a>
                             </aside>

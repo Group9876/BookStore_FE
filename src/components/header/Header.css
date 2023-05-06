@@ -5,6 +5,7 @@
 .logout {
     font-weight: normal;
 }
+
 .logout:hover {
     color: #33cc66;
 }
@@ -168,6 +169,7 @@ form input {
     padding-bottom: 0;
     padding-top: 15px;
 }
+
 .linkToCart i {
     stroke-width: 5px;
 }

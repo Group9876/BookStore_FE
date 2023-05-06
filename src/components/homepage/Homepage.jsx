@@ -195,10 +195,10 @@ class HomepageWithLocation extends Component {
                                                             </div>
                                                             <div className="product-title">{product.name}</div>
                                                             <div className="product-price">
-                                                            {/* <span
+                                                                {/* <span
                                                                 className="current-price">{(product.price - product.price * product.discount / 100).toFixed(2)}$</span> */}
-                                                                                                                            <span
-                                                                className="current-price">{product.price.toFixed(2)}$</span>
+                                                                <span
+                                                                    className="current-price">{product.price.toFixed(2)}$</span>
                                                                 <span
                                                                     className="original-price"><s>{(product.price).toFixed(2)}$</s></span>
                                                             </div>

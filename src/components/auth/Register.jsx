@@ -39,10 +39,18 @@ export default class Register extends Component {
                 console.log(res)
                 if (res.data.code === '201') {
                     window.location = "/login";
+                    alert("Registered successfully!")
+                } else {
+                    alert("Registered unsuccessfully!")
                 }
+
             })
             .catch((error) => {
-                alert(error.response.data.errors[0].defaultMessage)
+                if (error.response.data.errors) {
+                    alert(error.response.data.errors[0].defaultMessage)
+                } else {
+                    alert(error.response.data.message)
+                }
             })
     }
 

@@ -39,8 +39,22 @@ class HeaderWithNavigate extends Component {
     }
 
     handleAvatarLoad = () => {
-        this.setState({ avatarLoaded: true });
-      }
+        this.setState({avatarLoaded: true});
+    }
+
+    getUserProfile = () => {
+        axios.get(`${be_url}customer/${userId}`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        }).then((res) => {
+            this.setState({
+                avatar: res.data.avatar // Set the avatar state with the URL from the backend API
+            })
+        }).catch((err) => {
+            console.log(err)
+        })
+    }
 
     search = (event) => {
         event.preventDefault();
@@ -76,8 +90,8 @@ class HeaderWithNavigate extends Component {
                             <a href='/register'>&nbsp;Register</a>
                         </nav>
                         : <nav className='ml-auto'>
-                            <a className="logout"
-                                  onClick={this.logout} href='#'>&nbsp;&nbsp;&nbsp;&nbsp;Logout&nbsp;&nbsp;</a>|
+                            <span className="logout"
+                                  onClick={this.logout}>&nbsp;&nbsp;&nbsp;&nbsp;Logout&nbsp;&nbsp;</span>|
                             {/* <a href='/login'>&nbsp;Re-login&nbsp;&nbsp;</a>|
                             <a href='/register'>&nbsp;Re-register&nbsp;&nbsp;</a> */}
                         </nav>
