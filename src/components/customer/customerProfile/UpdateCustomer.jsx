@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 
-import {Button} from "react-bootstrap";
-import req, {be_url, userId} from "../../others/Share";
+import { Button } from "react-bootstrap";
+import req, { be_url, userId } from "../../others/Share";
 import Header from "../../header/Header";
 import Footer from "../../footer/Footer";
 import ImageUploading from "react-images-uploading";
@@ -21,20 +21,21 @@ export default function CustomerUpdate() {
     });
     useEffect(() => {
         fetchCustomer();
+        console.log("Fetch customer.");
     }, []);
 
     const formData = new FormData();
     console.log(formData);
-    const {username, email, password, address, phone, age, avatar} = customer;
+    const { username, email, password, address, phone, age, avatar } = customer;
 
     const handleChange = (event) => {
-        setCustomer({...customer, [event.target.id]: event.target.value});
+        setCustomer({ ...customer, [event.target.id]: event.target.value });
         console.log("Change");
     };
 
     const handleImageUpload = (imageList) => {
         formData.append("file", imageList[0].file);
-        setCustomer({...customer, avatar: imageList[0]});
+        setCustomer({ ...customer, avatar: imageList[0] });
         console.log("Image uploaded!");
     };
 
@@ -83,7 +84,7 @@ export default function CustomerUpdate() {
 
     return (
         <>
-            <Header/>
+            <Header />
             <div className="auth-wrapper">
                 <div className="auth-inner">
                     <form
@@ -175,10 +176,10 @@ export default function CustomerUpdate() {
                                 onChange={handleImageUpload}
                                 dataURLKey="data_url"
                             >
-                                {({onImageUpload, isDragging, dragProps, errors}) => (
+                                {({ onImageUpload, isDragging, dragProps, errors }) => (
                                     <div {...dragProps}>
                                         {avatar ? (
-                                            <img src={avatar} alt="avatar"/>
+                                            <img src={avatar.data_url} alt="avatar" />
                                         ) : (
                                             <div>
                                                 {isDragging ? (
@@ -202,7 +203,7 @@ export default function CustomerUpdate() {
                     </form>
                 </div>
             </div>
-            <Footer/>
+            <Footer />
         </>
     );
 }

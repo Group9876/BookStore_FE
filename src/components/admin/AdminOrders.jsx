@@ -118,9 +118,11 @@ class OrderByStatus extends React.Component {
                                                 <button
                                                     onClick={() => this.handleUpdateStatus(order.id, order.orderStatus, "shipping")}>Ship</button>}&nbsp;
                                             {order.orderStatus === "customer_confirmed" && <button
-                                                onClick={() => this.handleUpdateStatus(order.id, order.orderStatus, "customer_canceled")}>Deny</button>}
+                                                onClick={() => this.handleUpdateStatus(order.id, order.orderStatus, "customer_canceled")}>Deny</button>}&nbsp;
                                             {order.orderStatus === "customer_request_cancel" && <button
-                                                onClick={() => this.handleUpdateStatus(order.id, order.orderStatus, "customer_canceled")}>Cancel</button>}
+                                                onClick={() => this.handleUpdateStatus(order.id, order.orderStatus, "customer_canceled")}>Accept</button>}&nbsp;
+                                            {order.orderStatus === "customer_request_cancel" && <button
+                                                onClick={() => this.handleUpdateStatus(order.id, order.orderStatus, "shipping")}>Deny</button>}
 
                                         </tr>)
                                     )}
