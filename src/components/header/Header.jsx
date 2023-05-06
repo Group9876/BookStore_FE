@@ -9,18 +9,34 @@ class HeaderWithNavigate extends Component {
 
     state = {
         name: "",
-        numberOfItemInCart: 0
+        numberOfItemInCart: 0,
+        avatar: null
     }
     baseLink = fe_url + "product/"
 
     componentDidMount() {
         this.getNumberOfItem();
+        this.getUserProfile();
     }
 
     handleChange = event => {
         this.setState({
             [event.target.id]: event.target.value
         });
+    }
+
+    getUserProfile = () => {
+        axios.get(`${be_url}customer/${userId}`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        }).then((res) => {
+            this.setState({
+                avatar: res.data.avatar // Set the avatar state with the URL from the backend API
+            })
+        }).catch((err) => {
+            console.log(err)
+        })
     }
 
     search = (event) => {

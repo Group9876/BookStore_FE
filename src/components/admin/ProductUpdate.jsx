@@ -1,24 +1,27 @@
-import React, {useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
-import req, {be_url, fe_url, role} from "../others/Share";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import req, { fe_url, be_url, role } from "../others/Share";
 import NotFound from "../others/NotFound";
 import Header from "../header/Header";
 import Footer from "../footer/Footer";
-import axios from "axios";
+import axios from 'axios';
+import ImageUploading from "react-images-uploading";
 
-//form update 
-export default function ProductUpdate(props) {
-    const {id} = useParams();
+
+export default function ProductUpdate() {
+
+
+    const { id } = useParams();
     const [product, setProduct] = useState({
-        name: "",
-        description: "",
-        price: "",
-        inStock: "",
-        images: "",
-        category: "",
-        discount: ""
-    })
-
+      name: "",
+      description: "",
+      price: "",
+      inStock: "",
+      images: [],
+      category: "",
+      discount: "",
+    });
+  
     const logout = async () => {
         await axios.post(`${be_url}logout`).then((res) => {
             if (res.status === 200) {
@@ -31,31 +34,86 @@ export default function ProductUpdate(props) {
         })
     }
 
+    const formData = new FormData();
+  
     useEffect(() => {
-        fetchProductList();
-        console.log("list Product");
-    }, [])
-
-    const {name, description, price, inStock, images, category, discount} = product;
-
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      fetchProductList();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+  
+    const { name, description, price, inStock, images, category, discount } =
+      product;
+  
     const handleChange = (event) => {
-        setProduct({...product, [event.target.id]: event.target.value})
-        console.log(product);
-    }
-    const submitForm = async (e) => {
-        e.preventDefault();
-        await req.put(`${be_url}admin/product/${id}`, product)
-            .then((result) => {
-                window.location = "/admin/products";
-            })
-    }
-
-    let fetchProductList = async () => {
-        await req.get(be_url + 'product/' + id).then((res) => {
-            const products = res.data;
-            setProduct(products);
-        })
+      setProduct({ ...product, [event.target.id]: event.target.value });
     };
+  
+    const handleImageUpload = (imageList) => {
+      for (let i = 0; i < imageList.length; i++) {
+        formData.append("image", imageList[i].file);
+        console.log("Image uploaded!");
+        // console.log(imageList[i].file.type);/
+      }
+      setProduct({ ...product, images: imageList });
+      console.log("Product images uploaded!");
+    };
+    
+    const submitForm = async (e) => {
+      e.preventDefault();
+      await req.put(`${be_url}admin/product/${id}`, product).then((result) => {
+        window.location = "/admin/products";
+      });
+    };
+  
+    const submitProductImages = async (e) => {
+      e.preventDefault();
+  
+      // formData.append("productImages", images.file);
+  
+      for (let i = 0; i < images.length; i++) {
+        formData.append("image", images[i].file);
+        console.log("Image uploaded!");
+        console.log(images[i].file.type);
+      }
+      console.log("Submit product images!");
+  
+      await req
+        .post(`${be_url}admin/product-image-upload/${id}`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then(
+          (result) => {
+            window.location = "/admin/products";
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      };
+
+  //   const response = await fetch(`${be_url}admin/product-image-upload/${id}`, {
+  //     method: "POST",
+  //     headers: {
+  //       'Content-Type': 'multipart/form-data'
+  //     },
+  //     body: formData,
+  //   });
+  //   const contentType = response.headers.get("content-type");
+  //   console.log(contentType);
+  // }
+
+  let fetchProductList = async () => {
+    await req.get(be_url + "product/" + id).then((res) => {
+      const products = res.data;
+      setProduct(products);
+    });
+  };
+
+
+
 
     if (role === "ROLE_ADMIN") {
         return (
@@ -70,7 +128,17 @@ export default function ProductUpdate(props) {
                             </div>
                             <a className="admin-navigation" href={fe_url + "admin/products"}>Manage
                                 books</a>
-                            <a className="admin-navigation" href={fe_url + "admin/orders"}>Manage orders</a>
+                                <div className="dropdown">
+                                        <a className="admin-navigation" href={fe_url + "admin/orders"}>Manage
+                                            orders <i className="bi bi-chevron-down dropdown_icon"></i></a>
+                                        <div className="dropdown-content">
+                                            <a href={fe_url + "admin/orders?status=customer_confirmed"}>Checked out</a>
+                                            <a href={fe_url + "admin/orders?status=admin_preparing"}>Preparing</a>
+                                            <a href={fe_url + "admin/orders?status=shipping"}>Shipping</a>
+                                            <a href={fe_url + "admin/orders?status=customer_request_cancel"}>Cancel request</a>
+                                            <a href={fe_url + "admin/orders?status=success"}>Success</a>
+                                        </div>
+                                    </div>
                             <a className="admin-navigation current-pos" href={fe_url + "admin/vouchers"}>Manage
                                 vouchers</a>
                         </aside>
@@ -88,7 +156,8 @@ export default function ProductUpdate(props) {
                                     UPDATE BOOK
                                 </h3>
                                 <form className="form add card " onSubmit={(e) => {
-                                    submitForm(e)
+                                    submitForm(e);
+                                    submitProductImages(e);
                                 }}>
                                     <label className=" h6 guide">Name</label>
                                     <input type="text" className="form-control enter" id="name" value={name} required
@@ -112,9 +181,54 @@ export default function ProductUpdate(props) {
 
 
                                     <label className="h6 guide">Images</label>
-                                    <input type="text" className="form-control enter" id="images" value={images}
-                                           required
-                                           onChange={(e) => handleChange(e)}/>
+                                    <div>
+              <ImageUploading
+                multiple
+                value={images}
+                onChange={handleImageUpload}
+                maxNumber={10}
+                dataURLKey="data_url"
+              >
+                {({ onImageUpload, onImageRemoveAll, onImageRemove }) => (
+                  <div className="upload__image-wrapper">
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      onClick={onImageUpload}
+                    >
+                      Upload Images
+                    </button>
+                    &nbsp;
+                    <button
+                      type="button"
+                      className="btn btn-danger"
+                      onClick={onImageRemoveAll}
+                    >
+                      Remove All
+                    </button>
+                    {images.map((image, index) => (
+                      <div key={index} className="image-item">
+                        <img
+                          src={image["data_url"]}
+                          alt=""
+                          width="100"
+                          height="100"
+                        />
+                        <div className="image-item__btn-wrapper">
+                          <button
+                            type="button"
+                            className="btn btn-danger"
+                            onClick={() => onImageRemove(index)}
+                          >
+                            Remove
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </ImageUploading>
+            </div>
 
 
                                     <label className=" h6 guide ">Category</label>
