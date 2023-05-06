@@ -179,7 +179,7 @@ export default function CustomerUpdate() {
                 {({ onImageUpload, isDragging, dragProps, errors }) => (
                   <div {...dragProps}>
                     {avatar ? (
-                      <img src={avatar} alt="avatar" />
+                      <img src={avatar.data_url} alt="avatar" />
                     ) : (
                       <div>
                         {isDragging ? (
