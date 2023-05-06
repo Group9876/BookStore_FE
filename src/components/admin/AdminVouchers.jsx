@@ -87,7 +87,7 @@ export default class AdminVouchers extends React.Component {
                                     <table className="table-list">
                                         <thead className="product-detail">
                                         <h1 className="manager">Vouchers</h1>
-                                        <a className="btn btn-success btn-add" href={fe_url + "admin/voucher/add"}>Add
+                                        <a className="btn btn-success btn-add" href={fe_url + "admin/voucher"}>Add
                                             new</a>
                                         <tr>
                                             <th className="table_header">Customer</th>
@@ -138,7 +138,7 @@ export default class AdminVouchers extends React.Component {
 
                                     </div>
                                     <a className="admin-navigation" href={fe_url + "admin/products"}>Manage
-                                        products</a>
+                                        books</a>
                                     <div className="dropdown">
                                         <a className="admin-navigation" href={fe_url + "admin/orders"}>Manage
                                             orders <i className="bi bi-chevron-down dropdown_icon"></i></a>

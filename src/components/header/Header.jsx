@@ -31,6 +31,9 @@ class HeaderWithNavigate extends Component {
             avatarImage.onload = () => {
                 this.handleAvatarLoad(avatarUrl);
             };
+            this.setState({
+                avatar: avatarUrl
+            })
         }).catch((err) => {
             console.log(err)
         })
@@ -38,34 +41,6 @@ class HeaderWithNavigate extends Component {
 
     handleAvatarLoad = () => {
         this.setState({avatarLoaded: true});
-    }
-
-    getUserProfile = () => {
-        axios.get(`${be_url}customer/${userId}`, {
-            headers: {
-                Authorization: `Bearer ${accessToken}`
-            }
-        }).then((res) => {
-            this.setState({
-                avatar: res.data.avatar // Set the avatar state with the URL from the backend API
-            })
-        }).catch((err) => {
-            console.log(err)
-        })
-    }
-
-    getUserProfile = () => {
-        axios.get(`${be_url}customer/${userId}`, {
-            headers: {
-                Authorization: `Bearer ${accessToken}`
-            }
-        }).then((res) => {
-            this.setState({
-                avatar: res.data.avatar // Set the avatar state with the URL from the backend API
-            })
-        }).catch((err) => {
-            console.log(err)
-        })
     }
 
     search = (event) => {
@@ -98,12 +73,12 @@ class HeaderWithNavigate extends Component {
                 <div className='top'>
                     {!accessToken ?
                         <nav className='ml-auto'>
-                            <a href='/login'>&nbsp;&nbsp;&nbsp;&nbsp;Login&nbsp;&nbsp;</a>|
-                            <a href='/register'>&nbsp;Register</a>
+                            <a href='/login'>&nbsp;&nbsp;&nbsp;&nbsp;Login&nbsp;&nbsp;&nbsp;</a>|
+                            <a href='/register'>&nbsp;&nbsp;&nbsp;Register&nbsp;&nbsp;</a>|
                         </nav>
                         : <nav className='ml-auto'>
                             <span className="logout"
-                                  onClick={this.logout}>&nbsp;&nbsp;&nbsp;&nbsp;Logout&nbsp;&nbsp;</span>|
+                                  onClick={this.logout}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Logout&nbsp;&nbsp;&nbsp;&nbsp;</span>|
                             {/* <a href='/login'>&nbsp;Re-login&nbsp;&nbsp;</a>|
                             <a href='/register'>&nbsp;Re-register&nbsp;&nbsp;</a> */}
                         </nav>
@@ -128,6 +103,7 @@ class HeaderWithNavigate extends Component {
                         {role === "ROLE_ADMIN" && <a href={fe_url + 'admin/orders'}>Manage order</a>}
 
                     </div>
+
                     <form className='d-flex'>
                         <div className='d-flex'>
                             <input type='search' placeholder='Enter name of book' className='search mr-2'
@@ -139,13 +115,10 @@ class HeaderWithNavigate extends Component {
                         <>
                             <a href='/#'><Link to={fe_url + "cart"}><i className="bi bi-cart2 customCart"><span
                                 className='numberOfItem'>{this.state.numberOfItemInCart}</span></i></Link></a>
-                            <li className='account'><img src={this.state.avatar} alt='account'
-                                                         className='account'></img>
-                                <ul className='sub-account'>
-                                    <div><a href='/my_profile'>Profile</a></div>
-                                    <div className='orders'><a href={fe_url + "order"}>Orders</a></div>
-                                </ul>
-                            </li>
+                            <a href='/my_profile'><img className="account" src={this.state.avatar} alt="avatar"/></a>
+                            <ul className='sub-account'>
+                                <div className='orders'><a href="/orders">Orders</a></div>
+                            </ul>
                         </>}
                 </div>
                 <hr></hr>

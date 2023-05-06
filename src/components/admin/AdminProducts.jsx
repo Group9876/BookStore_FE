@@ -10,7 +10,8 @@ export default class AdminProducts extends React.Component {
     state = {
         products: [],
         pages: 0,
-        current: 0
+        current: 0,
+        total: 0
     }
 
     logout = () => {
@@ -34,10 +35,12 @@ export default class AdminProducts extends React.Component {
             const products = res.data.content;
             const pages = res.data.totalPages;
             const current = res.data.number;
+            const total = res.data.totalElements
             this.setState({
                 products,
                 pages,
-                current
+                current,
+                total,
             });
         })
     }
@@ -120,7 +123,7 @@ export default class AdminProducts extends React.Component {
                                     <table className="table-list">
                                         <thead className="product-detail">
                                         <h1 className="manager">Books</h1>
-                                        <a className="btn btn-success btn-add" href={fe_url + "admin/product/add"}>Add
+                                        <a className="btn btn-success btn-add" href={fe_url + "admin/product"}>Add
                                             new</a>
                                         <tr>
                                             <th className="table_header">Book Name</th>
@@ -158,7 +161,7 @@ export default class AdminProducts extends React.Component {
                                         )}
                                         </tbody>
                                         <tfoot>
-                                        <p className="book-available">{this.state.products.length} books
+                                        <p className="book-available">{this.state.total} books
                                             available</p>
                                         <div className="arr">{arr}</div>
                                         </tfoot>
@@ -181,7 +184,7 @@ export default class AdminProducts extends React.Component {
 
                                     </div>
                                     <a className="admin-navigation current-pos" href={fe_url + "admin/products"}>Manage
-                                        products</a>
+                                        books</a>
                                     <a className="admin-navigation" href={fe_url + "admin/orders"}>Manage orders</a>
                                     <a className="admin-navigation" href={fe_url + "admin/vouchers"}>Manage vouchers</a>
                                 </aside>

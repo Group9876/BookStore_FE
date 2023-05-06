@@ -8,18 +8,14 @@ import Header from "../header/Header";
 import Footer from "../footer/Footer";
 
 class ProductDetails extends React.Component {
-    state = {
-        outputCart: {},
-        count: 1,
-        statusCode: 0,
-        errorMessage: "",
-    };
-
     constructor(props) {
         super(props);
         this.state = {
             currentImageIndex: 0,
-            // other state properties...
+            outputCart: {},
+            count: 1,
+            statusCode: 0,
+            errorMessage: ""
         };
     }
 
@@ -30,6 +26,7 @@ class ProductDetails extends React.Component {
 
     handleIncrement = () => {
         this.setState({count: this.state.count + 1});
+        console.log(this.state.count)
     };
 
     handleDecrement = () => {
@@ -37,6 +34,7 @@ class ProductDetails extends React.Component {
             this.setState({count: this.state.count - 1});
         }
     };
+
     handleClick = async () => {
         const data = {};
         data.productId = this.state.productId;
@@ -47,8 +45,7 @@ class ProductDetails extends React.Component {
     };
 
     async postProductToCart(data, callback) {
-        await req
-            .post(be_url + "cart/" + userId, JSON.stringify(data))
+        await req.post(be_url + "cart/" + userId, JSON.stringify(data))
             .then((res) => {
             })
             .catch((error) => {
@@ -61,8 +58,7 @@ class ProductDetails extends React.Component {
     }
 
     fetchProduct(id) {
-        axios
-            .get(be_url + "product/" + id)
+        axios.get(be_url + "product/" + id)
             .then((res) => {
                 const pProductId = res.data.id;
                 const pName = res.data.name;
@@ -107,7 +103,6 @@ class ProductDetails extends React.Component {
             return (
                 <>
                     <Header/>
-
                     <div className="containerProductDetailsWithCondition">
                         {this.state.statusCode === 200 ? (
                             <div className="containerProductDetails">

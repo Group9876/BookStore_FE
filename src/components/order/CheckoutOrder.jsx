@@ -96,71 +96,85 @@ class CheckoutOrder extends React.Component {
 
     render() {
         if (role === "ROLE_CUSTOMER") {
-            return (
-                <div className="checkoutContainer">
-                    <div className="userInfo">
-                        <h3>Checkout information</h3>
-                        <form className="form out card">
-                            <label className=" h6 guide">Name</label>
-                            <input className="checkout" required name="customerName" placeholder="User name"
-                                   onChange={this.handleChange}></input>
+            if (this.state.items) {
+                return (<>
+                    <Header/>
+                    <div className="checkoutContainer">
+                        <div className="userInfo">
+                            <h3>Checkout information</h3>
+                            <form className="form out card">
+                                <label className=" h6 guide">Name</label>
+                                <input className="checkout" required name="customerName" placeholder="User name"
+                                       onChange={this.handleChange}></input>
 
-                            <label className=" h6 guide">Phone number</label>
-                            <input className="checkout" required name="phone" placeholder="Phone number"
-                                   onChange={this.handleChange}></input>
+                                <label className=" h6 guide">Phone number</label>
+                                <input className="checkout" required name="phone" placeholder="Phone number"
+                                       onChange={this.handleChange}></input>
 
-                            <label className="h6 guide">Address</label>
-                            <input className="checkout" required name="addressToReceive"
-                                   placeholder="Address to receive"
-                                   onChange={this.handleChange}></input>
-
-
-                            <label className="h6 guide">Note</label>
-                            <input className="checkout" required name="messageOfCustomer" placeholder="Message to shop"
-                                   onChange={this.handleChange}></input>
-
-                            <label className=" h6 guide ">Payment method</label>
-                            <select className="form-control enter" onChange={this.handleSelectChange}>
-                                <option>Select Payment Method</option>
-                                <option value="cash">By cash</option>
-                                <option value="online">Online</option>
-
-                            </select>
-
-                        </form>
-
-                    </div>
+                                <label className="h6 guide">Address</label>
+                                <input className="checkout" required name="addressToReceive"
+                                       placeholder="Address to receive"
+                                       onChange={this.handleChange}></input>
 
 
-                    <div className="bill">
-                        <h3>Products information</h3>
-                        <div className="productInfo">
-                            {this.state.items.map(item =>
-                                <div className="contentProductInfo" key={item.productId}>
-                                    <img src={item.images[0]} alt="product"></img>
-                                    <h4>{item.name}</h4>
-                                    <p>{item.price} $</p>
-                                    <p className="quantity_order">Quantity: {item.quantity}</p>
-                                </div>)}
+                                <label className="h6 guide">Note</label>
+                                <input className="checkout" required name="messageOfCustomer"
+                                       placeholder="Message to shop"
+                                       onChange={this.handleChange}></input>
 
+                                <label className=" h6 guide ">Payment method</label>
+                                <select className="form-control enter" onChange={this.handleSelectChange}>
+                                    <option>Select Payment Method</option>
+                                    <option value="cash">By cash</option>
+                                    <option value="online">Online</option>
 
-                            <div className="amount">
-                                <div className="voucher">
-                                    <input placeholder="voucher code" name="voucher"
-                                           onChange={this.handleChange}></input>
-                                    <button>Use</button>
-                                </div>
-                                <div>
-                                    <h5>Total: {this.state.total} $</h5>
-                                </div>
-                            </div>
+                                </select>
 
-                            <button onClick={this.handleCheckout}>Checkout</button>
+                            </form>
+
                         </div>
 
+
+                        <div className="bill">
+                            <h3>Products information</h3>
+                            <div className="productInfo">
+                                {this.state.items.map(item =>
+                                    <div className="contentProductInfo" key={item.productId}>
+                                        <img src={item.images[0]} alt="product"></img>
+                                        <h4>{item.name}</h4>
+                                        <p>{item.price} $</p>
+                                        <p className="quantity_order">Quantity: {item.quantity}</p>
+                                    </div>)}
+
+
+                                <div className="amount">
+                                    <div className="voucher">
+                                        <input placeholder="voucher code" name="voucher"
+                                               onChange={this.handleChange}></input>
+                                        <button>Use</button>
+                                    </div>
+                                    <div>
+                                        <h5>Total: {this.state.total} $</h5>
+                                    </div>
+                                </div>
+
+                                <button onClick={this.handleCheckout}>Checkout</button>
+                            </div>
+
+                        </div>
                     </div>
-                </div>
-            )
+                    <Footer/>
+                    </>
+                )
+            } else {
+                return (
+                    <>
+                        <Header/>
+                        <NotFound title='(>_<) No orders found!' details='Try making some orders by purchasing our books~'/>
+                        <Footer/>
+                    </>
+                )
+            }
         } else {
             return (
                 <>

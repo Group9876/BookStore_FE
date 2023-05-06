@@ -205,7 +205,7 @@ export default function ProductUpdate() {
                     >
                       Remove All
                     </button>
-                    {images.map((image, index) => (
+                    {images != null && images.map((image, index) => (
                       <div key={index} className="image-item">
                         <img
                           src={image["data_url"]}
