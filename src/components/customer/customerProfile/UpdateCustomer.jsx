@@ -1,13 +1,9 @@
-import React, { useEffect, useState } from "react";
-
-import { Button } from "react-bootstrap";
-import req, { be_url, userId } from "../../others/Share";
+import React, {useEffect, useState} from "react";
+import req, {be_url, userId} from "../../others/Share";
 import Header from "../../header/Header";
 import Footer from "../../footer/Footer";
 import ImageUploading from "react-images-uploading";
-// import Header from "../../header/Header";
-// import Footer from "../../footer/Footer";
-// import NotFound from "../../others/NotFound";
+import {Button} from "react-bootstrap";
 
 export default function CustomerUpdate() {
     const [customer, setCustomer] = useState({
@@ -17,83 +13,92 @@ export default function CustomerUpdate() {
         address: "",
         phone: "",
         age: "",
-        avatar: null,
+        avatar: "",
     });
     useEffect(() => {
         fetchCustomer();
-        console.log("Fetch customer.");
     }, []);
 
     const formData = new FormData();
-    console.log(formData);
-    const { username, email, password, address, phone, age, avatar } = customer;
+    const {username, email, password, address, phone, age, avatar} = customer;
 
     const handleChange = (event) => {
-        setCustomer({ ...customer, [event.target.id]: event.target.value });
-        console.log("Change");
+        setCustomer({...customer, [event.target.id]: event.target.value});
     };
 
     const handleImageUpload = (imageList) => {
         formData.append("file", imageList[0].file);
-        setCustomer({ ...customer, avatar: imageList[0] });
-        console.log("Image uploaded!");
+        setCustomer({...customer, avatar: imageList[0]});
     };
 
     const submitForm = async (e) => {
         e.preventDefault();
-        console.log("Submit form!");
+        if (avatar.file) {
+            const cust = customer;
+            cust.avatar = ""
+            setCustomer(cust)
+        }
         await req
             .put(`${be_url}customer/${userId}`, customer)
             .then((res) => {
-                console.log("Submit!");
-                window.location = "/";
+                submitAvatar()
             })
             .catch((error) => {
-                alert(error.response.data.errors[0].defaultMessage);
+                if (error.response.data.errors) {
+                    alert(error.response.data.errors[0].defaultMessage);
+                } else {
+                    alert(error.response.data.message);
+                }
             });
     };
 
-    const submitAvatar = async (e) => {
-        e.preventDefault();
-        console.log("Submit avatar!");
-
-        formData.append("file", avatar.file);
-
-        await req
-            .post(`${be_url}customer/update-avatar/${userId}`, formData, {
+    const submitAvatar = async () => {
+        if (avatar.file) {
+            formData.append("file", avatar.file);
+            await req.post(`${be_url}customer/update-avatar/${userId}`, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
             })
-            .then((res) => {
-                console.log("Submit!");
-                window.location = "/";
-            })
-            .catch((error) => {
-                alert(error.response.data.errors[0].defaultMessage);
-            });
-        console.log(avatar.file.type);
+                .then((res) => {
+                    alert("Profile saved!")
+                    window.location = "/"
+                })
+                .catch((error) => {
+                    if (error.response.data.errors) {
+                        alert(error.response.data.errors[0].defaultMessage);
+                    } else {
+                        alert(error.response.data.message);
+                    }
+                });
+        } else {
+            alert("Profile saved!")
+        }
+        window.location = "/"
     };
 
     let fetchCustomer = async () => {
         await req.get(be_url + "customer/" + userId).then((res) => {
             const customer = res.data;
+            customer.password = ""
+            if (customer.avatar && customer.avatar.indexOf("ems-intern-bucket") === -1) {
+                customer.avatar = ""
+            }
+
             setCustomer(customer);
         });
     };
 
     return (
         <>
-            <Header />
+            <Header/>
             <div className="auth-wrapper">
                 <div className="auth-inner">
-                    <form
-                        onSubmit={(e) => {
-                            submitForm(e);
-                            submitAvatar(e);
-                        }}
+                    <form onSubmit={(e) => {
+                        submitForm(e);
+                    }}
                     >
-                        <h3>UPDATE CUSTOMER'S PROFILE</h3>
+                        <h3>UPDATE PROFILE</h3>
                         <div className="mb-3">
                             <label>Username</label>
                             <input
@@ -102,7 +107,7 @@ export default function CustomerUpdate() {
                                 required
                                 className="form-control"
                                 value={username}
-                                onChange={(e) => handleChange(e)}
+                                readOnly
                             />
                         </div>
                         <div className="mb-3">
@@ -112,19 +117,8 @@ export default function CustomerUpdate() {
                                 id="email"
                                 required
                                 className="form-control"
+                                placeholder={email}
                                 value={email}
-                                onChange={(e) => handleChange(e)}
-                            />
-                        </div>
-                        <div className="mb-3">
-                            <label>Password</label>
-                            <input
-                                type="password"
-                                id="password"
-                                required
-                                className="form-control"
-                                placeholder="Enter old password"
-                                value={password}
                                 onChange={(e) => handleChange(e)}
                             />
                         </div>
@@ -135,6 +129,7 @@ export default function CustomerUpdate() {
                                 id="password"
                                 required
                                 className="form-control"
+                                placeholder={password}
                                 value={password}
                                 onChange={(e) => handleChange(e)}
                             />
@@ -144,8 +139,10 @@ export default function CustomerUpdate() {
                             <input
                                 type="text"
                                 id="address"
+                                required
                                 className="form-control"
                                 value={address}
+                                placeholder={address}
                                 onChange={(e) => handleChange(e)}
                             />
                         </div>
@@ -156,6 +153,7 @@ export default function CustomerUpdate() {
                                 id="phone"
                                 className="form-control"
                                 value={phone}
+                                placeholder={phone}
                                 onChange={(e) => handleChange(e)}
                             />
                         </div>
@@ -166,6 +164,7 @@ export default function CustomerUpdate() {
                                 id="age"
                                 className="form-control"
                                 value={age}
+                                placeholder={age}
                                 onChange={(e) => handleChange(e)}
                             />
                         </div>
@@ -176,34 +175,37 @@ export default function CustomerUpdate() {
                                 onChange={handleImageUpload}
                                 dataURLKey="data_url"
                             >
-                                {({ onImageUpload, isDragging, dragProps, errors }) => (
+                                {({onImageUpload, isDragging, dragProps, errors}) => (
                                     <div {...dragProps}>
-                                        {avatar ? (
-                                            <img src={avatar.data_url} alt="avatar" />
-                                        ) : (
-                                            <div>
-                                                {isDragging ? (
-                                                    <p>Drop the image here ...</p>
-                                                ) : (
-                                                    <p>
-                                                        Drag and drop an image or click to select a file
-                                                    </p>
-                                                )}
-                                                <button onClick={onImageUpload}>Upload Image</button>
-                                            </div>
-                                        )}
+                                        {!avatar && <div>
+                                            {isDragging ? (
+                                                <p>Drop the image here ...</p>
+                                            ) : (
+                                                <p>
+                                                    Drag and drop an image or click to select a file
+                                                </p>
+                                            )}
+                                            <button onClick={onImageUpload}>Upload Image</button>
+                                        </div>
+                                        }
                                         {errors && <div>Error: {errors}</div>}
                                     </div>
                                 )}
                             </ImageUploading>
+                            {avatar ? (
+                                <>
+                                    {avatar.data_url ? (<img src={avatar.data_url} alt="avatar"/>) : (
+                                        <img src={avatar} alt="avatar"/>)}
+                                </>
+                            ) : (<></>)}
                         </div>
                         <Button type="submit" className="btn" variant="outline-dark">
-                            Update the profile
+                            Update
                         </Button>
                     </form>
                 </div>
             </div>
-            <Footer />
+            <Footer/>
         </>
     );
 }

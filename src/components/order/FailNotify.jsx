@@ -1,7 +1,7 @@
 import React from "react";
-import withRouter from "../products/WithRouter";
+import withRouter from "../product/WithRouter";
 import "./Bill.css"
-import req, { be_url, fe_url, userId } from "../others/Share";
+import {fe_url} from "../others/Share";
 
 class FailNotify extends React.Component {
 

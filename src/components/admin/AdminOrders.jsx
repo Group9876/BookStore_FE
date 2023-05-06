@@ -1,6 +1,6 @@
 import React from "react";
 import req, {be_url, fe_url, role} from "../others/Share";
-import withRouter from '../products/WithRouter';
+import withRouter from '../product/WithRouter';
 import Header from "../header/Header";
 import NotFound from "../others/NotFound";
 import Footer from "../footer/Footer";
@@ -89,9 +89,14 @@ class OrderByStatus extends React.Component {
                             </article>
                             {/*admin*/}
                             <article className="admin-body">
-                                <h1 className="manager">Orders: {this.state.status}</h1>
                                 <table className="table-list">
                                     <thead className="product-detail">
+                                    <h1 className="manager">
+                                        {this.state.status === "customer_confirmed" && <>Checked Out </>}
+                                        {this.state.status === "admin_preparing" && <>Preparing </>}
+                                        {this.state.status === "shipping" && <>Shipping </>}
+                                        {this.state.status === "customer_request_cancel" && <>Cancel Request </>}
+                                        Orders</h1>
                                     <tr>
                                         <th>Books information</th>
                                         <th>Payment method</th>

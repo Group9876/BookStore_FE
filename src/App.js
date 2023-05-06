@@ -6,9 +6,9 @@ import Login from "./components/auth/Login";
 import ProductAdd from './components/admin/ProductAdd';
 import "./App.css"
 import ProductUpdate from './components/admin/ProductUpdate';
-import ProductDetails from './components/products/ProductDetails';
+import ProductDetails from './components/product/ProductDetails';
 import UpdateCustomer from "./components/customer/customerProfile/UpdateCustomer";
-import ProductsByCategory from './components/products/ProductsByCategory';
+import ProductsByCategory from './components/product/ProductsByCategory';
 import ShoppingCart from './components/customer/cart/ShoppingCart'
 import CheckoutOrder from './components/order/CheckoutOrder';
 import CheckBill from './components/order/CheckBill';
@@ -17,7 +17,7 @@ import VoucherAdd from "./components/admin/VoucherAdd";
 import AdminVouchers from "./components/admin/AdminVouchers";
 import AdminProducts from "./components/admin/AdminProducts";
 import AdminOrders from "./components/admin/AdminOrders";
-import NotFound from "./components/others/NotFound";
+import Page404 from "./components/others/Page404";
 
 
 function App() {
@@ -39,14 +39,14 @@ function App() {
                     <Route path="/admin/products" element={<AdminProducts/>}></Route>
                     <Route path="/admin/orders" element={<AdminOrders/>}></Route>
                     <Route path="/admin/vouchers" element={<AdminVouchers/>}></Route>
-                    <Route path="/admin/voucher/add" element={<VoucherAdd/>}></Route>
+                    <Route path="/admin/voucher" element={<VoucherAdd/>}></Route>
                     {/* user only */}
                     <Route path='/cart' element={<ShoppingCart/>}></Route>
-                    <Route path='/order/:id' element={<CheckoutOrder/>}></Route>
+                    <Route path='/orders' element={<CheckoutOrder/>}></Route>
                     <Route path="/my_profile" element={<UpdateCustomer/>}/>
                     <Route path="/bill" element={<CheckBill/>}/>
-                    <Route path="/*" element={<NotFound title='(╥﹏╥) 404 error: Page not found!'
-                                                        details='We cannot find this page, please try again later!'/>}/>
+                    <Route path="/*" element={<Page404 title='(╥﹏╥) 404 error: Page not found!'
+                                                       details='We cannot find this page, please try again later!'/>}/>
                 </Routes>
             </div>
         </Router>

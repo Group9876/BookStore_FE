@@ -1,5 +1,5 @@
 import React from "react";
-import withRouter from "../products/WithRouter";
+import withRouter from "../product/WithRouter";
 import "./Bill.css"
 import {fe_url, role} from "../others/Share";
 import Header from "../header/Header";

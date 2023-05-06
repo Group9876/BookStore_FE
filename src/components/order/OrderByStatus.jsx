@@ -1,6 +1,6 @@
 import React from "react";
 import req, {be_url, fe_url, role} from "../others/Share";
-import withRouter from "../products/WithRouter";
+import withRouter from "../product/WithRouter";
 import Footer from "../footer/Footer";
 import Header from "../header/Header";
 import NotFound from "../others/NotFound";
