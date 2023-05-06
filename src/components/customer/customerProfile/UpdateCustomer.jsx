@@ -32,16 +32,10 @@ export default function CustomerUpdate() {
     };
 
     const submitForm = async (e) => {
-        e.preventDefault();
-        if (avatar.file) {
-            const cust = customer;
-            cust.avatar = ""
-            setCustomer(cust)
-        }
+        e.preventDefault()
         await req
             .put(`${be_url}customer/${userId}`, customer)
             .then((res) => {
-                submitAvatar()
             })
             .catch((error) => {
                 if (error.response.data.errors) {
@@ -52,7 +46,8 @@ export default function CustomerUpdate() {
             });
     };
 
-    const submitAvatar = async () => {
+    const submitAvatar = async (e) => {
+        e.preventDefault();
         if (avatar.file) {
             formData.append("file", avatar.file);
             await req.post(`${be_url}customer/update-avatar/${userId}`, formData, {
@@ -71,10 +66,7 @@ export default function CustomerUpdate() {
                         alert(error.response.data.message);
                     }
                 });
-        } else {
-            alert("Profile saved!")
         }
-        window.location = "/"
     };
 
     let fetchCustomer = async () => {
@@ -84,7 +76,6 @@ export default function CustomerUpdate() {
             if (customer.avatar && customer.avatar.indexOf("ems-intern-bucket") === -1) {
                 customer.avatar = ""
             }
-
             setCustomer(customer);
         });
     };
@@ -95,7 +86,8 @@ export default function CustomerUpdate() {
             <div className="auth-wrapper">
                 <div className="auth-inner">
                     <form onSubmit={(e) => {
-                        submitForm(e);
+                        submitAvatar(e)
+                        submitForm(e)
                     }}
                     >
                         <h3>UPDATE PROFILE</h3>
@@ -151,6 +143,7 @@ export default function CustomerUpdate() {
                             <input
                                 type="tel"
                                 id="phone"
+                                required
                                 className="form-control"
                                 value={phone}
                                 placeholder={phone}
@@ -162,6 +155,7 @@ export default function CustomerUpdate() {
                             <input
                                 type="number"
                                 id="age"
+                                required
                                 className="form-control"
                                 value={age}
                                 placeholder={age}
@@ -177,27 +171,26 @@ export default function CustomerUpdate() {
                             >
                                 {({onImageUpload, isDragging, dragProps, errors}) => (
                                     <div {...dragProps}>
-                                        {!avatar && <div>
-                                            {isDragging ? (
-                                                <p>Drop the image here ...</p>
-                                            ) : (
-                                                <p>
-                                                    Drag and drop an image or click to select a file
-                                                </p>
-                                            )}
-                                            <button onClick={onImageUpload}>Upload Image</button>
-                                        </div>
-                                        }
+                                        {avatar ? (
+                                                avatar.data_url ?
+                                                        (<img src={avatar.data_url} alt="avatar"></img>) :
+                                                        (<img src={avatar} alt="avatar"></img>)
+                                        ) : (
+                                            <div>
+                                                {isDragging ? (
+                                                    <p>Drop the image here ...</p>
+                                                ) : (
+                                                    <p>
+                                                        Drag and drop an image or click to select a file
+                                                    </p>
+                                                )}
+                                                <button onClick={onImageUpload}>Upload Image</button>
+                                            </div>
+                                        )}
                                         {errors && <div>Error: {errors}</div>}
                                     </div>
                                 )}
                             </ImageUploading>
-                            {avatar ? (
-                                <>
-                                    {avatar.data_url ? (<img src={avatar.data_url} alt="avatar"/>) : (
-                                        <img src={avatar} alt="avatar"/>)}
-                                </>
-                            ) : (<></>)}
                         </div>
                         <Button type="submit" className="btn" variant="outline-dark">
                             Update
@@ -207,5 +200,6 @@ export default function CustomerUpdate() {
             </div>
             <Footer/>
         </>
-    );
+    )
+        ;
 }
