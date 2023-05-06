@@ -10,9 +10,7 @@ class HeaderWithNavigate extends Component {
     state = {
         name: "",
         numberOfItemInCart: 0,
-        avatar: null,
-        avatarLoaded: false, // Add a new state to track if the avatar image has loaded
-
+        avatar: null
     }
     baseLink = fe_url + "product/"
 
@@ -40,6 +38,20 @@ class HeaderWithNavigate extends Component {
 
     handleAvatarLoad = () => {
         this.setState({avatarLoaded: true});
+    }
+
+    getUserProfile = () => {
+        axios.get(`${be_url}customer/${userId}`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        }).then((res) => {
+            this.setState({
+                avatar: res.data.avatar // Set the avatar state with the URL from the backend API
+            })
+        }).catch((err) => {
+            console.log(err)
+        })
     }
 
     getUserProfile = () => {

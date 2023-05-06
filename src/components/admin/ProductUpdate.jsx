@@ -34,79 +34,18 @@ export default function ProductUpdate() {
     }
 
     const formData = new FormData();
-
+  
     useEffect(() => {
-        fetchProductList();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      fetchProductList();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-    const {name, description, price, inStock, images, category, discount} =
-        product;
-
+  
+    const { name, description, price, inStock, images, category, discount } =
+      product;
+  
     const handleChange = (event) => {
-        setProduct({...product, [event.target.id]: event.target.value});
-    };
-
-    const handleImageUpload = (imageList) => {
-        for (let i = 0; i < imageList.length; i++) {
-            formData.append("image", imageList[i].file);
-            console.log("Image uploaded!");
-            // console.log(imageList[i].file.type);/
-        }
-        setProduct({...product, images: imageList});
-        console.log("Product images uploaded!");
-    };
-
-    const submitForm = async (e) => {
-        e.preventDefault();
-        await req.put(`${be_url}admin/product/${id}`, product).then((result) => {
-            window.location = "/admin/products";
-        });
-    };
-
-    const submitProductImages = async (e) => {
-        e.preventDefault();
-
-        // formData.append("productImages", images.file);
-
-        for (let i = 0; i < images.length; i++) {
-            formData.append("image", images[i].file);
-            console.log("Image uploaded!");
-            console.log(images[i].file.type);
-        }
-        console.log("Submit product images!");
-
-        await req
-            .post(`${be_url}admin/product-image-upload/${id}`, formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                },
-            })
-            .then(
-                (result) => {
-                    window.location = "/admin/products";
-                },
-                (error) => {
-                    console.log(error);
-                }
-            );
-    };
-
-    //   const response = await fetch(`${be_url}admin/product-image-upload/${id}`, {
-    //     method: "POST",
-    //     headers: {
-    //       'Content-Type': 'multipart/form-data'
-    //     },
-    //     body: formData,
-    //   });
-    //   const contentType = response.headers.get("content-type");
-    //   console.log(contentType);
-    // }
-
-    let fetchProductList = async () => {
-        await req.get(be_url + "product/" + id).then((res) => {
-            const products = res.data;
-            setProduct(products);
-        });
+      setProduct({ ...product, [event.target.id]: event.target.value });
     };
   
     const handleImageUpload = (imageList) => {
@@ -171,7 +110,6 @@ export default function ProductUpdate() {
       setProduct(products);
     });
   };
-
 
 
 
@@ -243,53 +181,53 @@ export default function ProductUpdate() {
 
                                     <label className="h6 guide">Images</label>
                                     <div>
-                                        <ImageUploading
-                                            multiple
-                                            value={images}
-                                            onChange={handleImageUpload}
-                                            maxNumber={10}
-                                            dataURLKey="data_url"
-                                        >
-                                            {({imageList, onImageUpload, onImageRemoveAll}) => (
-                                                <div className="upload__image-wrapper">
-                                                    <button
-                                                        type="button"
-                                                        className="btn btn-primary"
-                                                        onClick={onImageUpload}
-                                                    >
-                                                        Upload Images
-                                                    </button>
-                                                    &nbsp;
-                                                    <button
-                                                        type="button"
-                                                        className="btn btn-danger"
-                                                        onClick={onImageRemoveAll}
-                                                    >
-                                                        Remove All
-                                                    </button>
-                                                    {images.map((image, index) => (
-                                                        <div key={index} className="image-item">
-                                                            <img
-                                                                src={image}
-                                                                alt=""
-                                                                width="100"
-                                                                height="100"
-                                                            />
-                                                            <div className="image-item__btn-wrapper">
-                                                                <button
-                                                                    type="button"
-                                                                    className="btn btn-danger"
-                                                                    onClick={() => onImageRemoveAll(index)}
-                                                                >
-                                                                    Remove
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            )}
-                                        </ImageUploading>
-                                    </div>
+              <ImageUploading
+                multiple
+                value={images}
+                onChange={handleImageUpload}
+                maxNumber={10}
+                dataURLKey="data_url"
+              >
+                {({ onImageUpload, onImageRemoveAll, onImageRemove }) => (
+                  <div className="upload__image-wrapper">
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      onClick={onImageUpload}
+                    >
+                      Upload Images
+                    </button>
+                    &nbsp;
+                    <button
+                      type="button"
+                      className="btn btn-danger"
+                      onClick={onImageRemoveAll}
+                    >
+                      Remove All
+                    </button>
+                    {images.map((image, index) => (
+                      <div key={index} className="image-item">
+                        <img
+                          src={image["data_url"]}
+                          alt=""
+                          width="100"
+                          height="100"
+                        />
+                        <div className="image-item__btn-wrapper">
+                          <button
+                            type="button"
+                            className="btn btn-danger"
+                            onClick={() => onImageRemove(index)}
+                          >
+                            Remove
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </ImageUploading>
+            </div>
 
 
                                     <label className=" h6 guide ">Category</label>
