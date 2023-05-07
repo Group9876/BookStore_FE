@@ -1,7 +1,7 @@
 import React from "react";
 import withRouter from "../product/WithRouter";
 import "./Bill.css"
-import  req, {be_url, userId, fe_url, role} from "../others/Share";
+import req, {be_url, checkout_url, fe_url, role, userId} from "../others/Share";
 import Header from "../header/Header";
 import NotFound from "../others/NotFound";
 import Footer from "../footer/Footer";
@@ -21,22 +21,37 @@ class CheckBill extends React.Component {
         if (this.state.dataToCheckout.paymentMethod === "cash") {
             req.post(be_url + "order/" + userId, this.state.dataToCheckout)
                 .then(() => {
-
+                    window.location.href = fe_url + "success"
                 })
                 .catch((error) => {
                     console.log(error)
                 })
-            if (localStorage.getItem("isFromCart") === "true") {
-                this.deleteItems();
-            }
-            window.location.href = fe_url + "success"
-            localStorage.removeItem("isFromCart")
-            localStorage.removeItem("items")
-            localStorage.removeItem("total")
-            localStorage.removeItem("dataToCheckout")
-            localStorage.removeItem("products")
         }
-
+        if (this.state.dataToCheckout.paymentMethod === "online") {
+            // localStorage.setItem("dataToLak", "hehe là nó nè");
+            // const totalPrice = this.state.total;
+            //  handel online payment
+            req
+                .post(checkout_url + this.state.total)
+                .then((response) => {
+                    localStorage.setItem("dataToPay", JSON.stringify(response.data));
+                    const resdata = response.data;
+                    const url = resdata[1].href;
+                    window.location.href = url;
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            // window.location.href = fe_url + "success";
+        }
+        if (localStorage.getItem("isFromCart") === "true") {
+            this.deleteItems();
+        }
+        localStorage.removeItem("isFromCart")
+        localStorage.removeItem("items")
+        localStorage.removeItem("total")
+        localStorage.removeItem("dataToCheckout")
+        localStorage.removeItem("products")
     }
 
     deleteItems = () => {
@@ -92,7 +107,7 @@ class CheckBill extends React.Component {
 
                                     </div>
                                     <div className="text-center">
-                                        <button className="btn btn-outline-dark mt-2" onClick={this.handleConfirm}>Confirm
+                                        <button className="btn btn-outline-dark mt-3" onClick={this.handleConfirm}>Confirm
                                         </button>
                                     </div>
 
