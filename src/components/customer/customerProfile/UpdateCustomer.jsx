@@ -66,6 +66,9 @@ export default function CustomerUpdate() {
                         alert(error.response.data.message);
                     }
                 });
+        } else {
+            alert("Profile saved!")
+            window.location = "/"
         }
     };
 

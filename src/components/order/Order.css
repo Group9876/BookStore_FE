@@ -96,6 +96,7 @@
     display: flex;
     width: auto;
     margin: 10px;
+    border-bottom: none;
 }
 
 .line button {

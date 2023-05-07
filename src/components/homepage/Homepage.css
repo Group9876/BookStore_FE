@@ -129,8 +129,9 @@
 
 .product-title {
     font-family: "Roboto", "cursive";
-    font-weight: 300;
-    line-height: normal;
+    overflow: hidden;
+    line-height: 1.5em;
+    height: 3em;
     list-style: none;
     box-sizing: border-box;
     text-align: center;
@@ -140,7 +141,6 @@
     padding: 0 15px 5px;
     display: inline-block;
     color: #333333;
-    height: 50px;
     font-weight: 600;
 }
 

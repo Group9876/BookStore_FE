@@ -19,6 +19,7 @@ import AdminProducts from "./components/admin/AdminProducts";
 import AdminOrders from "./components/admin/AdminOrders";
 import Page404 from "./components/others/Page404";
 import OrderByStatus from "./components/order/OrderByStatus";
+import FailNotify from "./components/order/FailNotify";
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
                     <Route path="/login" element={<Login/>}/>
                     <Route path='/product/:category/:page' element={<ProductsByCategory/>}></Route>
                     <Route path='/success' element={<SuccessNotify/>}></Route>
+                    <Route path='/cancel' element={<FailNotify/>}></Route>
                     {/* admin only */}
                     <Route path="/admin/products" element={<AdminProducts/>}/>
                     <Route path="/admin/product" element={<ProductAdd/>}/>

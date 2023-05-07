@@ -12,7 +12,7 @@ export default class ProductAdd extends React.Component {
         description: '',
         price: '',
         inStock: '',
-        images: '',
+        images: [],
         category: '',
         discount: ''
     }
@@ -176,7 +176,7 @@ export default class ProductAdd extends React.Component {
 
                                         <label className="h6 guide">Discount</label>
                                         <input type="text" min="0" className="form-control enter" id="discount"
-                                               value="0" required
+                                               value={this.state.discount} required
                                                onChange={this.handleAddImage}/>
 
                                         <div className="btnSubmit">

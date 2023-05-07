@@ -17,7 +17,7 @@ class FailNotify extends React.Component {
                 <Header/>
                 <div className="boxinnotif mt-5 mb-5">
                     <div className="mess pt-3">
-                        <h4>Order Fail!</h4>
+                        <h4>Order failed! Please try again later!</h4>
                     </div>
                     <div className="text-center pb-3">
                         <button className="btn-outline-dark" onClick={this.handleContinue}>Continue shopping >></button>

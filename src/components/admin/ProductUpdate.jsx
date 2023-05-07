@@ -30,6 +30,7 @@ export default function ProductUpdate() {
                 })
                 window.location = "/"
             }
+
         })
     }
 
@@ -78,20 +79,25 @@ export default function ProductUpdate() {
                 // console.log(images[i].file.type);
             }
             console.log("Submit product images!");
-
-            req.post(`${be_url}admin/product-image-upload/${id}`, formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                },
-            })
-                .then(
-                    (res) => {
-                        //
+            if (formData.get("image")) {
+                req.post(`${be_url}admin/product-image-upload/${id}`, formData, {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
                     },
-                    (error) => {
-                        console.log(error);
-                    }
-                );
+                })
+                    .then(
+                        (res) => {
+                            window.location = "/admin/products";
+                        },
+                        (error) => {
+                            console.log(error);
+                        }
+                    );
+            } else {
+                window.location = "/admin/products";
+            }
+        } else {
+            window.location = "/admin/products";
         }
     };
 
@@ -161,8 +167,6 @@ export default function ProductUpdate() {
                                 <form className="form add card " onSubmit={(e) => {
                                     submitForm(e);
                                     submitProductImages(e);
-                                    window.location = "/admin/products";
-
                                 }}>
                                     <label className=" h6 guide">Name</label>
                                     <input type="text" className="form-control enter" id="name" value={name}
