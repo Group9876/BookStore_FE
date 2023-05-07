@@ -92,7 +92,7 @@ class CheckBill extends React.Component {
 
                                     </div>
                                     <div className="text-center">
-                                        <button className="btn btn-outline-dark" onClick={this.handleConfirm}>Confirm
+                                        <button className="btn btn-outline-dark mt-2" onClick={this.handleConfirm}>Confirm
                                         </button>
                                     </div>
 

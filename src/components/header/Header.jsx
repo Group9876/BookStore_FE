@@ -107,7 +107,7 @@ class HeaderWithNavigate extends Component {
                                 {role === "ROLE_CUSTOMER" &&
                                     <a href={fe_url + 'my_orders?status=success'}>Successful orders</a>}
                                 {role === "ROLE_CUSTOMER" &&
-                                    <a href={fe_url + 'my)orders?status=customer_canceled'}>Canceled orders</a>}
+                                    <a href={fe_url + 'my_orders?status=customer_canceled'}>Canceled orders</a>}
                                 {role === "ROLE_ADMIN" && <a href={fe_url + 'admin/products'}>Manage books</a>}
                                 {role === "ROLE_ADMIN" && <a href={fe_url + 'admin/orders'}>Manage orders</a>}
                                 {role === "ROLE_ADMIN" && <a href={fe_url + 'admin/products'}>Manage vouchers</a>}

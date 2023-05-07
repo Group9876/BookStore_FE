@@ -111,8 +111,8 @@ export default class ShoppingCart extends React.Component {
             data.name = outputCart.name
             data.quantity = outputCart.quantity
             itemList[i] = data
-            // total = total + (outputCart.price - outputCart.price * outputCart.discount / 100) * outputCart.quantity
-            total = total + (outputCart.price) * outputCart.quantity
+            total = total + (outputCart.price - outputCart.price * outputCart.discount / 100) * outputCart.quantity
+            // total = total + (outputCart.price) * outputCart.quantity
 
         }
         localStorage.setItem("total", total)

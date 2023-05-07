@@ -57,7 +57,7 @@ class OrderByStatus extends React.Component {
             return (<>
                     <Header/>
                     <div>
-                        <div className="order_list">
+                        {this.state.orders.length !== 0 && <div className="order_list">
                             <h1>
                                 {this.state.status === "customer_confirmed" && <>Checked Out </>}
                                 {this.state.status === "admin_preparing" && <>Preparing </>}
@@ -65,7 +65,9 @@ class OrderByStatus extends React.Component {
                                 {this.state.status === "success" && <>Successful </>}
                                 {this.state.status === "customer_canceled" && <>Canceled </>} Orders
                             </h1>
-                        </div>
+                        </div>}
+                        {this.state.orders.length === 0 && <NotFound title="(╥﹏╥) No orders found!"
+                                                                     details="Please wait for the future updates!"></NotFound>}
                         {this.state.orders.length !== 0 &&
                             <div className="order_item">
                                 {
@@ -94,8 +96,6 @@ class OrderByStatus extends React.Component {
                                 }
                             </div>
                         }
-                        {this.state.orders.length === 0 && <NotFound title="(╥﹏╥)No order found!"
-                                                                     details={"There is no order being " + this.state.status}></NotFound>}
                     </div>
                     <Footer/>
                 </>

@@ -126,28 +126,28 @@ class CheckoutOrder extends React.Component {
                             <h3>Checkout information</h3>
                             <form className="form out card">
                                 <label className=" h6 guide">Name</label>
-                                <input className="checkout" required name="customerName" placeholder="User name"
+                                <input className="checkout p-3" required name="customerName" placeholder="User name"
                                        defaultValue={this.state.userInfo.username}
                                        onChange={this.handleChange}></input>
 
                                 <label className=" h6 guide">Phone number</label>
-                                <input className="checkout" required name="phone" placeholder="Phone number"
+                                <input className="checkout p-3" required name="phone" placeholder="Phone number"
                                        defaultValue={this.state.userInfo.phone}
                                        onChange={this.handleChange}></input>
 
                                 <label className="h6 guide">Address</label>
-                                <input className="checkout" required name="addressToReceive"
+                                <input className="checkout p-3" required name="addressToReceive"
                                        defaultValue={this.state.userInfo.address}
                                        placeholder="Address to receive"
                                        onChange={this.handleChange}></input>
 
 
                                 <label className="h6 guide">Note</label>
-                                <input className="checkout" required name="messageOfCustomer"
+                                <input className="checkout p-3" required name="messageOfCustomer"
                                        placeholder="Message to shop"
                                        onChange={this.handleChange}></input>
 
-                                <label className=" h6 guide ">Payment method</label>
+                                <label className=" h6 guide">Payment method</label>
                                 <select className="form-control enter" onChange={this.handleSelectChange}>
                                     <option value="cash">By cash</option>
                                     <option value="online">Online</option>
