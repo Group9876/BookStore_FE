@@ -1,5 +1,5 @@
 import React from "react";
-import withRouter from "../products/WithRouter";
+import withRouter from "../product/WithRouter";
 import "./Bill.css"
 import {fe_url, role} from "../others/Share";
 import Header from "../header/Header";
@@ -15,15 +15,20 @@ class SuccessNotify extends React.Component {
     render() {
         if (role === "ROLE_CUSTOMER") {
             return (
-                <div className="boxinnotif">
-                    <div className="mess">
-                        <h4>Order succesfully!</h4>
-                    </div>
-                    <div className="mess">
-                        <button onClick={this.handleContinue}>Continue shopping</button>
-                    </div>
+                <>
+                    <Header/>
+                    <div className="boxinnotif mt-5 mb-5">
+                        <div className="mess pt-3">
+                            <h4>Order succesfully!</h4>
+                        </div>
+                        <div className="text-center pb-3">
+                            <button className="btn-outline-dark" onClick={this.handleContinue}>Continue shopping >>
+                            </button>
+                        </div>
 
-                </div>
+                    </div>
+                    <Footer/>
+                </>
             )
         } else {
             return (

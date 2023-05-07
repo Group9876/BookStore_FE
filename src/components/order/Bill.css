@@ -49,3 +49,7 @@
     display: flex;
     justify-content: center;
 }
+
+.amount {
+    border-radius: 5px;
+}

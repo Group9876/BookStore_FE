@@ -15,7 +15,6 @@ export default class ShoppingCart extends React.Component {
     url = be_url + "cart/"
 
     componentDidMount() {
-        console.log("fetch")
         this.fetchProducts();
     }
 
@@ -32,8 +31,8 @@ export default class ShoppingCart extends React.Component {
             let totalPrice = 0;
             outputCarts.forEach(product => {
                 totalPrice += (product.price - product.price * product.discount / 100) * product.quantity;
+
             });
-            console.log(totalPrice)
             this.setState({
                 outputCarts: outputCarts,
                 total: totalPrice
@@ -106,11 +105,14 @@ export default class ShoppingCart extends React.Component {
             data.name = outputCart.name
             data.quantity = outputCart.quantity
             itemList[i] = data
-            total = total + (outputCart.price - outputCart.price * outputCart.discount / 100) * outputCart.quantity
+            // total = total + (outputCart.price - outputCart.price * outputCart.discount / 100) * outputCart.quantity
+            total = total + (outputCart.price) * outputCart.quantity
+
         }
         localStorage.setItem("total", total)
         localStorage.setItem("items", JSON.stringify(itemList));
-        window.location.href = `${fe_url}order/${userId}`;
+        localStorage.setItem("isFromCart", "true")
+        window.location.href = `${fe_url}orders`;
     }
 
 
@@ -139,7 +141,7 @@ export default class ShoppingCart extends React.Component {
                                     .map(outputCart =>
                                         <tr key={outputCart.productId}>
                                             <td><img src={outputCart.images[0]} alt="img"></img></td>
-                                            <td> {outputCart.name} </td>
+                                            <td><a href={"/product/" + outputCart.productId}>{outputCart.name}</a></td>
                                             <td> {outputCart.price - outputCart.price * outputCart.discount / 100} $</td>
                                             <td>
                                                 <div className='bar'>

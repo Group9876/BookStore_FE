@@ -82,10 +82,11 @@
     padding: 3px;
 }
 
+/*
 .small img:hover {
     width: 400px;
     height: 400px;
-}
+} */
 
 .smallContainer {
     display: flex;
