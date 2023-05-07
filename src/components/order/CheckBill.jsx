@@ -1,8 +1,7 @@
 import React from "react";
 import withRouter from "../product/WithRouter";
 import "./Bill.css"
-import {fe_url, role} from "../others/Share";
-import req, {be_url, fe_url, role, userId} from "../others/Share";
+import  req, {be_url, userId, fe_url, role} from "../others/Share";
 import Header from "../header/Header";
 import NotFound from "../others/NotFound";
 import Footer from "../footer/Footer";
