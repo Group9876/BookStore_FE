@@ -15,12 +15,12 @@ class FailNotify extends React.Component {
         return (
             <>
                 <Header/>
-                <div className="boxinnotif">
-                    <div className="mess">
+                <div className="boxinnotif mt-5 mb-5">
+                    <div className="mess pt-3">
                         <h4>Order Fail!</h4>
                     </div>
-                    <div className="mess">
-                        <button onClick={this.handleContinue}>Continue shopping</button>
+                    <div className="text-center pb-3">
+                        <button className="btn-outline-dark" onClick={this.handleContinue}>Continue shopping >></button>
                     </div>
                 </div>
                 <Footer/>
