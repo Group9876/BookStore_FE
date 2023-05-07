@@ -18,6 +18,7 @@ import AdminVouchers from "./components/admin/AdminVouchers";
 import AdminProducts from "./components/admin/AdminProducts";
 import AdminOrders from "./components/admin/AdminOrders";
 import Page404 from "./components/others/Page404";
+import OrderByStatus from "./components/order/OrderByStatus";
 
 
 function App() {
@@ -43,6 +44,7 @@ function App() {
                     {/* user only */}
                     <Route path='/cart' element={<ShoppingCart/>}></Route>
                     <Route path='/orders' element={<CheckoutOrder/>}></Route>
+                    <Route path='/my_orders' element={<OrderByStatus/>}></Route>
                     <Route path="/my_profile" element={<UpdateCustomer/>}/>
                     <Route path="/bill" element={<CheckBill/>}/>
                     <Route path="/*" element={<Page404 title='(╥﹏╥) 404 error: Page not found!'
