@@ -62,6 +62,12 @@ class HeaderWithNavigate extends Component {
         })
     }
 
+    handleChange = (e) => {
+        this.setState({
+            [e.target.id]: e.target.value
+        })
+    }
+
     getNumberOfItem = () => {
         req.get(be_url + "cart/count/" + userId)
             .then((res) => {

@@ -197,11 +197,11 @@ class CheckoutOrder extends React.Component {
                 </>
                 )
             } else {
-                <>
+                return (<>
                     <Header />
                     <NotFound title='(╥﹏╥) No items found!' details='Perhaps you should add some items to your cart first!' />
                     <Footer />
-                </>
+                </>)
             }
         } else {
             return (

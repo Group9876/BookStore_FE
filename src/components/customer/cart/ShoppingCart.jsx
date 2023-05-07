@@ -37,7 +37,13 @@ export default class ShoppingCart extends React.Component {
                 outputCarts: outputCarts,
                 total: totalPrice
             });
-        });
+        }).catch((error) => {
+            if (error.response.data.errors) {
+                console.log(error.response.data.errors[0].defaultMessage)
+            } else {
+                console.log(error.response.data.message)
+            }
+        })
     };
 
     handleDelete = (id) => {

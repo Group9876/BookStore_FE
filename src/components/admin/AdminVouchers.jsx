@@ -166,7 +166,7 @@ export default class AdminVouchers extends React.Component {
                                     <table className="table-list">
                                         <thead className="product-detail">
                                         <h1 className="manager">Voucher</h1>
-                                        <a className="btn btn-success btn-add" href={fe_url + "admin/voucher/add"}>Add
+                                        <a className="btn btn-success btn-add" href={fe_url + "admin/voucher"}>Add
                                             new</a>
                                         <tr>
                                             <th className="table_header">Customer</th>
