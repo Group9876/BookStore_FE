@@ -55,42 +55,44 @@ export default function ProductUpdate() {
             // console.log(imageList[i].file.type);/
         }
         setProduct({...product, images: imageList});
-        console.log("Product images uploaded!");
+        // console.log("Product images uploaded!");
     };
 
-    const submitForm = async (e) => {
+    const submitForm = (e) => {
+        let productUpdated = product;
+        productUpdated.images = []
         e.preventDefault();
-        await req.put(`${be_url}admin/product/${id}`, product).then((res) => {
-            window.location = "/admin/products";
+        req.put(`${be_url}admin/product/${id}`, productUpdated).then((res) => {
+            console.log("Form submit!")
         });
     };
 
-    const submitProductImages = async (e) => {
-        e.preventDefault();
+    const submitProductImages = (e) => {
+        if (images) {
+            // formData.append("productImages", images.file);
+            for (let i = 0; i < images.length; i++) {
+                if (images[i].file) {
+                    formData.append("image", images[i].file);
+                }  
+                // console.log("Image uploaded!");
+                // console.log(images[i].file.type);
+            }
+            console.log("Submit product images!");
 
-        // formData.append("productImages", images.file);
-
-        for (let i = 0; i < images.length; i++) {
-            formData.append("image", images[i].file);
-            console.log("Image uploaded!");
-            console.log(images[i].file.type);
-        }
-        console.log("Submit product images!");
-
-        await req
-            .post(`${be_url}admin/product-image-upload/${id}`, formData, {
+            req.post(`${be_url}admin/product-image-upload/${id}`, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
             })
-            .then(
-                (res) => {
-                    window.location = "/admin/products";
-                },
-                (error) => {
-                    console.log(error);
-                }
-            );
+                .then(
+                    (res) => {
+                        //
+                    },
+                    (error) => {
+                        console.log(error);
+                    }
+                );
+        }
     };
 
     //   const response = await fetch(`${be_url}admin/product-image-upload/${id}`, {
@@ -159,6 +161,8 @@ export default function ProductUpdate() {
                                 <form className="form add card " onSubmit={(e) => {
                                     submitForm(e);
                                     submitProductImages(e);
+                                    window.location = "/admin/products";
+
                                 }}>
                                     <label className=" h6 guide">Name</label>
                                     <input type="text" className="form-control enter" id="name" value={name}
@@ -209,15 +213,14 @@ export default function ProductUpdate() {
                                                     >
                                                         Remove All
                                                     </button>
-                                                    {images != null && images.map((image, index) => (
-
+                                                    {images && images.map((image, index) => (
                                                         <div key={index} className="image-item">
-                                                            {image['data_url']? (<img
+                                                            {image['data_url'] ? (<img
                                                                 src={image["data_url"]}
                                                                 alt=""
                                                                 width="100"
                                                                 height="100"
-                                                            />):(<img
+                                                            />) : (<img
                                                                 src={image}
                                                                 alt=""
                                                                 width="100"
