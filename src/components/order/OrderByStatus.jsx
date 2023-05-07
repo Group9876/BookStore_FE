@@ -58,15 +58,19 @@ class OrderByStatus extends React.Component {
                     <Header/>
                     <div>
                         <div className="order_list">
-                            <h1>{"Orders: " + this.state.status}</h1>
+                            <h1>
+                                {this.state.status === "customer_confirmed" && <>Checked Out </>}
+                                {this.state.status === "admin_preparing" && <>Preparing </>}
+                                {this.state.status === "shipping" && <>Shipping </>}
+                                {this.state.status === "success" && <>Successful </>}
+                                {this.state.status === "customer_canceled" && <>Canceled </>} Orders
+                            </h1>
                         </div>
                         {this.state.orders.length !== 0 &&
                             <div className="order_item">
-                                <hr></hr>
                                 {
                                     this.state.orders.map(order => (
-                                        <div key={order.id}>
-                                            <hr></hr>
+                                        <div className="line" key={order.id}>
                                             {order.items.map(item => (<div className="item" key={item.productId}>
                                                 <p><img src={item.images[0]} alt="product"></img></p>
                                                 <p className="name_cat"><h4>{item.productName}</h4>
@@ -86,7 +90,6 @@ class OrderByStatus extends React.Component {
                                                 onClick={() => this.handleUpdateStatus(order.id, order.orderStatus, "customer_canceled")}>Cancel</button>}&nbsp;
                                             {(role === "ROLE_CUSTOMER" && order.orderStatus === "shipping") && <button
                                                 onClick={() => this.handleUpdateStatus(order.id, order.orderStatus, "success")}>Received</button>}&nbsp;
-                                            <hr></hr>
                                         </div>))
                                 }
                             </div>
