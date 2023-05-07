@@ -212,7 +212,7 @@ export default function ProductUpdate() {
                                                     {images != null && images.map((image, index) => (
 
                                                         <div key={index} className="image-item">
-                                                            {images['data_url']? (<img
+                                                            {image['data_url']? (<img
                                                                 src={image["data_url"]}
                                                                 alt=""
                                                                 width="100"
@@ -255,7 +255,7 @@ export default function ProductUpdate() {
                                     </select>
 
                                     <label className="h6 guide">Discount</label>
-                                    <input type="text" min="0" className="form-control enter" id="images"
+                                    <input type="text" min="0" className="form-control enter" id="discount"
                                            value={discount} required
                                            onChange={(e) => handleChange(e)}/>
 
