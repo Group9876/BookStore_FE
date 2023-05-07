@@ -87,7 +87,7 @@ export default function ProductUpdate(props) {
                         <option value="Adventure">Adventure</option>
                         <option value="Classics">Classics</option>
                         <option value="Fiction">Fiction</option>
-                        <option value="Horror">Horro</option>
+                        <option value="Horror">Horror</option>
                     </select>
 
                     <label className="h6 guide">Discount</label>
