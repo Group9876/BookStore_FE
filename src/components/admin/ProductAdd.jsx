@@ -102,7 +102,7 @@ export default class ProductAdd extends React.Component {
                                                           alt="logo"/><span>PRO BOOKSTORE</span></a>
 
                                 </div>
-                                <a className="admin-navigation" href={fe_url + "admin/products"}>Manage
+                                <a className="admin-navigation current-pos" href={fe_url + "admin/products"}>Manage
                                     books</a>
                                 <div className="dropdown">
                                     <a className="admin-navigation" href={fe_url + "admin/orders"}>Manage
@@ -116,7 +116,7 @@ export default class ProductAdd extends React.Component {
                                         <a href={fe_url + "admin/orders?status=success"}>Success</a>
                                     </div>
                                 </div>
-                                <a className="admin-navigation current-pos" href={fe_url + "admin/vouchers"}>Manage
+                                <a className="admin-navigation " href={fe_url + "admin/vouchers"}>Manage
                                     vouchers</a>
                             </aside>
                         </div>
@@ -156,10 +156,10 @@ export default class ProductAdd extends React.Component {
                                                onChange={this.handleChange}/>
 
 
-                                        <label className="h6 guide">Images</label>
+                                        {/* <label className="h6 guide">Images</label>
                                         <input type="text" className="form-control enter" id="images"
                                                value={this.state.images} required
-                                               onChange={this.handleAddImage}/>
+                                               onChange={this.handleAddImage}/> */}
 
                                         <label className=" h6 guide ">Category</label>
                                         <select className="form-control enter" id="category"

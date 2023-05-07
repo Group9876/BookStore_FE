@@ -127,7 +127,7 @@ export default function ProductUpdate() {
 
 
                             </div>
-                            <a className="admin-navigation" href={fe_url + "admin/products"}>Manage
+                            <a className="admin-navigation  current-pos" href={fe_url + "admin/products"}>Manage
                                 books</a>
                             <div className="dropdown">
                                 <a className="admin-navigation" href={fe_url + "admin/orders"}>Manage
@@ -142,7 +142,7 @@ export default function ProductUpdate() {
                                     <a href={fe_url + "admin/orders?status=success"}>Success</a>
                                 </div>
                             </div>
-                            <a className="admin-navigation current-pos" href={fe_url + "admin/vouchers"}>Manage
+                            <a className="admin-navigation" href={fe_url + "admin/vouchers"}>Manage
                                 vouchers</a>
                         </aside>
                     </div>
