@@ -30,6 +30,7 @@ export default function ProductUpdate() {
                 })
                 window.location = "/"
             }
+
         })
     }
 
@@ -86,12 +87,14 @@ export default function ProductUpdate() {
             })
                 .then(
                     (res) => {
-                        //
+                        window.location = "/admin/products";
                     },
                     (error) => {
                         console.log(error);
                     }
                 );
+        } else {
+            window.location = "/admin/products";
         }
     };
 
@@ -161,8 +164,6 @@ export default function ProductUpdate() {
                                 <form className="form add card " onSubmit={(e) => {
                                     submitForm(e);
                                     submitProductImages(e);
-                                    window.location = "/admin/products";
-
                                 }}>
                                     <label className=" h6 guide">Name</label>
                                     <input type="text" className="form-control enter" id="name" value={name}

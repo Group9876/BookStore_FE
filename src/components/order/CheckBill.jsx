@@ -36,12 +36,12 @@ class CheckBill extends React.Component {
                     localStorage.setItem("dataToPay", JSON.stringify(response.data));
                     const resdata = response.data;
                     const url = resdata[1].href;
-                    // window.location.href = url;
+                    window.location.href = url;
                 })
                 .catch((error) => {
                     console.log(error);
                 });
-            window.location.href = fe_url + "success";
+            //window.location.href = fe_url + "success";
         }
         if (localStorage.getItem("isFromCart") === "true") {
             this.deleteItems();
