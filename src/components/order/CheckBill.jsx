@@ -19,6 +19,7 @@ class CheckBill extends React.Component {
 
     handleConfirm = () => {
         if (this.state.dataToCheckout.paymentMethod === "cash") {
+            console.log(1)
             req.post(be_url + "order/" + userId, this.state.dataToCheckout)
                 .then(() => {
                     window.location.href = fe_url + "success"
@@ -26,23 +27,21 @@ class CheckBill extends React.Component {
                 .catch((error) => {
                     console.log(error)
                 })
-        }
-        if (this.state.dataToCheckout.paymentMethod === "online") {
+        } else if (this.state.dataToCheckout.paymentMethod === "online") {
             // localStorage.setItem("dataToLak", "hehe là nó nè");
             // const totalPrice = this.state.total;
             //  handel online payment
-            req
-                .post(checkout_url + this.state.total)
+            req.post(checkout_url + this.state.total)
                 .then((response) => {
                     localStorage.setItem("dataToPay", JSON.stringify(response.data));
                     const resdata = response.data;
                     const url = resdata[1].href;
-                    window.location.href = url;
+                    // window.location.href = url;
                 })
                 .catch((error) => {
                     console.log(error);
                 });
-            // window.location.href = fe_url + "success";
+            window.location.href = fe_url + "success";
         }
         if (localStorage.getItem("isFromCart") === "true") {
             this.deleteItems();
