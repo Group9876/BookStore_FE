@@ -141,6 +141,7 @@
     display: inline-block;
     color: #333333;
     height: 50px;
+    font-weight: 600;
 }
 
 .product-price {

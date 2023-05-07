@@ -5,7 +5,7 @@
 
 .boxofbill {
     border-radius: 5px;
-    border: 1px #33cc66 solid;
+    border: 2px #33cc66 solid;
     padding: 5px;
     padding-left: 10px;
     padding-right: 10px;
@@ -35,7 +35,7 @@
 
 .boxinnotif {
     border-radius: 5px;
-    border: 1px #33cc66 solid;
+    border: 2px #33cc66 solid;
     padding: 5px;
     padding-left: 10px;
     padding-right: 10px;

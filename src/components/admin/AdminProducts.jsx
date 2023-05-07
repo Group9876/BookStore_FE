@@ -145,7 +145,7 @@ export default class AdminProducts extends React.Component {
                                                         <td>{product.inStock}</td>
                                                         <td><img src={product.images[0]} alt={product.name}/></td>
                                                         <td>{product.category}</td>
-                                                        <td>{product.discount}</td>
+                                                        <td>{product.discount}%</td>
                                                         <td>
                                                             <a href={`/admin/product/${product.id}`}><i
                                                                 className="bi bi-pen"></i></a>
