@@ -79,20 +79,23 @@ export default function ProductUpdate() {
                 // console.log(images[i].file.type);
             }
             console.log("Submit product images!");
-
-            req.post(`${be_url}admin/product-image-upload/${id}`, formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                },
-            })
-                .then(
-                    (res) => {
-                        window.location = "/admin/products";
+            if (formData.get("image")) {
+                req.post(`${be_url}admin/product-image-upload/${id}`, formData, {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
                     },
-                    (error) => {
-                        console.log(error);
-                    }
-                );
+                })
+                    .then(
+                        (res) => {
+                            window.location = "/admin/products";
+                        },
+                        (error) => {
+                            console.log(error);
+                        }
+                    );
+            } else {
+                window.location = "/admin/products";
+            }
         } else {
             window.location = "/admin/products";
         }
