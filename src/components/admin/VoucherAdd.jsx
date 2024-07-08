@@ -1,15 +1,14 @@
 import React from "react";
-import "../others/backup/Admin.css";
-import req, {be_url, fe_url, role} from "../others/Share";
-import NotFound from "../others/NotFound";
-import Header from "../header/Header";
-import Footer from "../footer/Footer";
+import req, {be_url, fe_url, role} from "../share/Share";
+import NotFound from "../share/notfound/NotFound";
+import Header from "../share/header/Header";
+import Footer from "../share/footer/Footer";
 import axios from "axios";
 
 export default class VoucherAdd extends React.Component {
     state = {
         title: '',
-        customerId: 0,
+        userEmail: '',
         rate: 0,
         dueDate: ''
     }
@@ -18,10 +17,8 @@ export default class VoucherAdd extends React.Component {
         axios.post(`${be_url}logout`).then((res) => {
             if (res.status === 200) {
                 localStorage.clear()
-                this.setState({
-                    accessToken: null
-                })
-                window.location = "/"
+                alert("Logout successfully!")
+                window.location = "/home"
             }
         })
     }
@@ -34,17 +31,10 @@ export default class VoucherAdd extends React.Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        event.target.reset();
-        this.setState({
-            title: '',
-            customerId: 0,
-            rate: 0,
-            dueDate: ''
-        })
 
         const voucher = {
             title: this.state.title,
-            customerId: this.state.customerId,
+            userEmail: this.state.userEmail,
             rate: this.state.rate,
             dueDate: this.state.dueDate
         }
@@ -52,16 +42,24 @@ export default class VoucherAdd extends React.Component {
         req.post(be_url + 'admin/voucher', voucher)
             .then((res) => {
                 if (res.status === 200) {
+                    console.log("Voucher created!")
+                    event.target.reset();
+                    this.setState({
+                        title: '',
+                        userEmail: '',
+                        rate: 0,
+                        dueDate: ''
+                    })
                     window.location = "/admin/vouchers";
                 }
             })
             .catch(error => {
-                console.error(error);
+                alert(error.response.data.message)
             })
     }
 
     render() {
-        if (role === "ROLE_ADMIN") {
+        if (role() === "ROLE_ADMIN") {
             return (
                 <div className="container">
                     {/*aside*/}
@@ -69,22 +67,25 @@ export default class VoucherAdd extends React.Component {
                         <div className="col-3">
                             <aside className="admin-aside">
                                 <div className="web-name">
-                                    <a href={fe_url}><img className="admin-logo" src="/images/icon.jpg"
-                                                          alt="logo"/><span>PRO BOOKSTORE</span></a>
+                                    <a href={fe_url + 'home'}><img className="admin-logo" src="/images/account.jpg"
+                                                                   alt="logo"/>&nbsp;<span>PRO BOOKSTORE</span></a>
 
                                 </div>
                                 <a className="admin-navigation" href={fe_url + "admin/products"}>Manage
                                     books</a>
                                 <div className="dropdown">
-                                    <a className="admin-navigation" href={fe_url + "admin/orders"}>Manage
+                                    <a className="admin-navigation"
+                                       href={fe_url + "admin/orders/1?status=customer_confirmed"}>Manage
                                         orders <i className="bi bi-chevron-down dropdown_icon"></i></a>
                                     <div className="dropdown-content">
-                                        <a href={fe_url + "admin/orders?status=customer_confirmed"}>Checked out</a>
-                                        <a href={fe_url + "admin/orders?status=admin_preparing"}>Preparing</a>
-                                        <a href={fe_url + "admin/orders?status=shipping"}>Shipping</a>
-                                        <a href={fe_url + "admin/orders?status=customer_request_cancel"}>Cancel
-                                            request</a>
-                                        <a href={fe_url + "admin/orders?status=success"}>Success</a>
+                                        <a href={fe_url + "admin/orders?status=customer_confirmed"}>Checked out
+                                            orders</a>
+                                        <a href={fe_url + "admin/orders?status=admin_preparing"}>Preparing orders</a>
+                                        <a href={fe_url + "admin/orders?status=shipping"}>Shipping orders</a>
+                                        <a href={fe_url + "admin/orders?status=customer_request_cancel"}>Canceling
+                                            orders</a>
+                                        <a href={fe_url + "admin/orders?status=canceled"}>Canceled orders</a><a
+                                        href={fe_url + "admin/orders?status=success"}>Successful orders</a>
                                     </div>
                                 </div>
                                 <a className="admin-navigation current-pos" href={fe_url + "admin/vouchers"}>Manage
@@ -94,24 +95,24 @@ export default class VoucherAdd extends React.Component {
                         {/*header*/}
                         <div className="col-9">
                             <article className="admin-header">
-                                <span className="welcome">Welcome ADMIN!</span>&nbsp;&nbsp;
-                                <span onClick={this.logout} className="bi bi-box-arrow-right"/>
+                                <span className="welcome">Welcome ADMIN!</span>&nbsp;
+                                <span onClick={this.logout} className="bi bi-box-arrow-right"/>&nbsp;
                             </article>
                             {/*admin*/}
                             <article className="admin-body">
                                 <div className="container text-center mt-3 mb-5">
-                                    <h3 className=" text-primary- p-2 ">
+                                    <h2 className="p-2">
                                         ADD NEW VOUCHER
-                                    </h3>
-                                    <form className="form add card " onSubmit={this.handleSubmit}>
+                                    </h2>
+                                    <form className="form add card text-left p-4" onSubmit={this.handleSubmit}>
                                         <label className="h6 guide">Title</label>
                                         <input type="text" className="form-control enter" id="title"
                                                value={this.state.title} required
                                                onChange={this.handleChange}/>
 
-                                        <label className="h6 guide">Customer ID</label>
-                                        <input type="number" className="form-control enter" min="0" id="customerId"
-                                               value={this.state.customerId} required
+                                        <label className="h6 guide">User Email</label>
+                                        <input type="text" className="form-control enter" min="0" id="userEmail"
+                                               value={this.state.userEmail} required
                                                onChange={this.handleChange}/>
 
                                         <label className="h6 guide">Rate</label>
@@ -126,8 +127,8 @@ export default class VoucherAdd extends React.Component {
                                                required
                                                onChange={this.handleChange}/>
 
-                                        <div className="btnSubmit">
-                                            <button type="submit" className="btn btn-primary  bg-success">Add Voucher
+                                        <div className="btnSubmit mt-3">
+                                            <button type="submit" className="btn checkoutBtn mx-0">Add Voucher
                                             </button>
                                         </div>
                                     </form>

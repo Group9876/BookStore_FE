@@ -1,23 +1,22 @@
 .top {
-    background-color: #f1f1f1;
+    background-color: #ddd;
 }
 
 .logout {
     font-weight: normal;
 }
 
-.logout:hover {
+.logout:hover, .active {
     color: #33cc66;
 }
 
 .menu {
     display: flex;
-    justify-content: space-around;
     align-content: center;
 }
 
-.green-btn {
-    background-color: #33cc33;
+.org-current-price {
+    color: #33cc33;
 }
 
 .btn {
@@ -27,7 +26,11 @@
 
 .green-btn:hover {
     background-color: rgba(70, 255, 100, 1);
-    color: black;
+    color: white;
+}
+
+button i:hover, .drop-btn i:hover {
+    color: white
 }
 
 .logo {
@@ -35,12 +38,16 @@
 }
 
 .cats {
-    margin: auto;
+    margin: auto 20px;
 }
 
 a {
     padding: 8px;
     color: black;
+}
+
+.cats a {
+    padding: 8px;
 }
 
 a:hover {
@@ -60,7 +67,6 @@ form {
 form input {
     border-radius: 5px;
     height: 40px;
-    width: 250px;
 }
 
 .cart {
@@ -111,12 +117,13 @@ form input {
 
 .search {
     padding-left: 10px;
+    width: 300px;
 }
 
 .drop-btn {
     background-color: #33cc33;
     font-size: 16px;
-    border-radius: 10px;
+    border-radius: 5px;
     margin-right: 10px;
     cursor: pointer;
 }
@@ -163,6 +170,7 @@ form input {
 }
 
 .customCart {
+    position: relative;
     padding-bottom: 0;
     height: 40px;
 }

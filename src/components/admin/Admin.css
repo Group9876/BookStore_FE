@@ -1,25 +1,59 @@
 .admin-aside {
     height: 100%;
+    min-height: 100vh;
     padding-top: 10px;
-    padding-left: 30px;
-    background: linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(51, 204, 102, 0.5832457983193278) 100%);
+    padding-left: 40px;
+    background: #86ffaa;
+    border-right: #33CC66 2px solid;
+    line-height: 1.4rem;
+    font-size: 1.1rem;
 }
 
 .col-3, .col-9 {
     padding: 0;
+    margin: 0;
 }
 
 .container {
     padding: 0;
-
+    max-width: 100vw;
 }
 
 .admin-logo {
     margin: 10px 5px 10px 0;
+    width: 40px;
+    height: 30px;
+    object-fit: cover;
+}
+
+.image-item {
+    position: relative;
+    margin-right: 15px;
+    margin-bottom: 10px;
+}
+
+.top-right {
+    position: absolute;
+    font-size: 12px;
+    border-radius: 5px;
+    padding: 5px;
+    bottom: 12px;
+    background: red;
+    top: -20px;
+    right: -10px;
+    z-index: 2;
+}
+
+.image-item i:hover {
+    color: white;
+}
+
+.guide {
+    padding-top: 0.5rem;
 }
 
 .admin-header {
-    background: linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(51, 204, 102, 0.5832457983193278) 100%);
+    background: #33CC66;;
     margin-bottom: 15px;
     padding-top: 10px;
     text-align: right;
@@ -28,23 +62,44 @@
 
 .admin-navigation {
     display: block;
-    font-weight: bold;
+    font-weight: 450;
+}
+
+.admin-navigation:hover {
+    color: #0c8531;
 }
 
 article table h1 {
     display: inline-block;
 }
 
+.header {
+    padding: 10px 0 10px 25px;
+    position: relative;
+}
+
+
 .btn-add {
     display: inline-block;
     position: absolute;
-    right: 0;
-    color: #ffffff;
+    top: 10px;
+    right: 20px;
+    background-color: #33cc66;
+    padding: 8px 20px;
+    border: none;
+}
+
+.btn-add:hover {
+    background-color: rgba(70, 255, 100, 1);
 }
 
 .web-name {
-    font-weight: bold;
-    font-size: 20px;
+    font-weight: bolder;
+    font-size: 1.4rem;
+}
+
+.web-name a:hover {
+    color: #0c8531;
 }
 
 .table-list {
@@ -66,33 +121,22 @@ th, td {
 }
 
 .book-available {
-    margin-top: 10px;
     font-weight: bold;
-}
-
-.click {
-    background: #1eff78;
-    padding: 5px 12px;
-    margin: 5px;
-}
-
-.clicked {
-    background: #33cc66;
-    padding: 5px 12px;
-    margin: 5px;
+    position: absolute;
+    left: 25px
 }
 
 th {
     color: #00ad33;
 }
 
-tfoot {
+.footer {
     position: relative;
     height: 75px;
 }
 
 .current-pos {
-    color: #8b4513;
+    color: #0c8531;
 }
 
 .arr {
@@ -101,7 +145,12 @@ tfoot {
 }
 
 .admin-body {
-    padding: 10px;
+    padding: 10px 10px 0 10px;
+}
+
+.form {
+    margin: 30px 100px;
+    border: #00ad33 2px solid;
 }
 
 .dropdown_icon {
@@ -109,6 +158,7 @@ tfoot {
 }
 
 .dropdown-content {
+    width: max-content;
     display: none;
     position: absolute;
     z-index: 3;

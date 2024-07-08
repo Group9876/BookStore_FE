@@ -1,8 +1,8 @@
 .containerProductDetails {
     display: flex;
-    padding: 50px;
+    padding: 40px;
     margin: 0 auto;
-    width: 70%;
+    width: 80%;
 }
 
 .pictures {
@@ -11,13 +11,11 @@
 
 .big img {
     width: 400px;
-    height: 400px;
-    border: 1px solid #33cc66;
+    height: 500px;
 }
 
 .numberBar {
     padding-top: 50px;
-    padding-left: 10px;
 }
 
 .number {
@@ -38,14 +36,19 @@
 
 .addCartOrBuy {
     padding-top: 20px;
+    margin: 0;
 }
 
 .addToCart {
     background-color: #33cc66;
-    margin: 10px;
-    padding: 0 15px 10px 5px;
+    margin: 10px 10px 0 0;
+    padding: 0 15px 10px 0;
     border-radius: 10px;
     border: none;
+}
+
+i {
+    bottom: 5px;
 }
 
 .buyNow {
@@ -77,9 +80,10 @@
 }
 
 .small img {
-    width: 66px;
-    height: 50px;
-    padding: 3px;
+    width: 60px;
+    height: 60px;
+    margin: 3px;
+    object-fit: cover;
 }
 
 /*
@@ -93,3 +97,4 @@
     width: 400px;
     flex-wrap: wrap;
 }
+

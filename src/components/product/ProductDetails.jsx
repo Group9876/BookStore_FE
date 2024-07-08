@@ -2,10 +2,8 @@ import axios from "axios";
 import React from "react";
 import withRouter from "./WithRouter";
 import "./Product.css";
-import req, {be_url, fe_url, userId} from "../others/Share";
-import NotFound from "../others/NotFound";
-import Header from "../header/Header";
-import Footer from "../footer/Footer";
+import req, {be_url, fe_url, userId} from "../share/Share";
+import NotFound from "../share/notfound/NotFound";
 
 class ProductDetails extends React.Component {
     constructor(props) {
@@ -26,7 +24,6 @@ class ProductDetails extends React.Component {
 
     handleIncrement = () => {
         this.setState({count: this.state.count + 1});
-        console.log(this.state.count)
     };
 
     handleDecrement = () => {
@@ -40,13 +37,14 @@ class ProductDetails extends React.Component {
         data.productId = this.state.productId;
         data.quantity = this.state.count;
         await this.postProductToCart(data, () => {
-            window.location.href = fe_url + "cart";
+            window.location = "/cart";
         });
     };
 
     async postProductToCart(data, callback) {
-        await req.post(be_url + "cart/" + userId, JSON.stringify(data))
+        await req.post(be_url + "cart/" + userId(), JSON.stringify(data))
             .then((res) => {
+                console.log("Product added to cart.")
             })
             .catch((error) => {
                 this.setState({
@@ -60,20 +58,16 @@ class ProductDetails extends React.Component {
     fetchProduct(id) {
         axios.get(be_url + "product/" + id)
             .then((res) => {
-                const pProductId = res.data.id;
-                const pName = res.data.name;
-                const pPrice = res.data.price;
-                const pDescription = res.data.description;
-                const pInStock = res.data.inStock;
-                const pImages = res.data.images;
+                console.log("Fetch product #" + id)
                 this.setState({
-                    productId: pProductId,
-                    name: pName,
-                    price: pPrice,
-                    description: pDescription,
-                    inStock: pInStock,
-                    images: pImages,
+                    productId: res.data.data.id,
+                    name: res.data.data.name,
+                    price: res.data.data.price,
+                    description: res.data.data.description,
+                    inStock: res.data.data.inStock,
+                    images: res.data.data.images,
                     statusCode: 200,
+                    discount: res.data.data.discount
                 });
             })
             .catch((error) => {
@@ -91,99 +85,87 @@ class ProductDetails extends React.Component {
         data.price = this.state.price;
         data.name = this.state.name;
         data.quantity = this.state.count;
-        console.log(this.state.count);
         const itemList = [data];
         localStorage.setItem("total", this.state.count * this.state.price);
         localStorage.setItem("items", JSON.stringify(itemList));
-        window.location.href = `${fe_url}order/${userId}`;
+        window.location.href = `${fe_url}order`;
     };
 
     render() {
         if (this.state.productId) {
             return (
-                <>
-                    <Header/>
-                    <div className="containerProductDetailsWithCondition">
-                        {this.state.statusCode === 200 ? (
-                            <div className="containerProductDetails">
-                                <div className="pictures">
-                                    <div className="smallContainer">
-                                        <div className="big">
-                                            <img
-                                                src={this.state.images[this.state.currentImageIndex]}
-                                                alt="img"
-                                            ></img>
-                                        </div>
-                                        {this.state.images.map((element, key) => (
-                                            <div
-                                                //   className="small"
-                                                key={key}
-                                                onClick={() =>
-                                                    this.setState({currentImageIndex: key})
-                                                }
-                                            >
-                                                <div className="small">
-                                                    {" "}
-                                                    <img src={element} alt="img"></img>
-                                                </div>
-                                            </div>
-                                        ))}
+                <div className="containerProductDetailsWithCondition">
+                    {this.state.statusCode === 200 ? (
+                        <div className="containerProductDetails">
+                            <div className="pictures">
+                                <div className="smallContainer">
+                                    <div className="big">
+                                        <img
+                                            src={this.state.images[this.state.currentImageIndex]}
+                                            alt="img"
+                                        ></img>
+
                                     </div>
+                                    {this.state.images.map((element, key) => (
+                                        <div
+                                            key={key}
+                                            onClick={() =>
+                                                this.setState({currentImageIndex: key})
+                                            }
+                                        >
+                                            <div className="small">
+                                                <img src={element} alt="img"></img>
+                                            </div>
+                                        </div>
+                                    ))}
                                 </div>
-                                <div className="productDetails">
-                                    <h3>{this.state.name}</h3>
-                                    <p>{this.state.description}</p>
-                                    {/* <div className="big">
+                            </div>
+                            <div className="productDetails">
+                                <h1>{this.state.name}</h1>
+                                <p>{this.state.description}</p>
+                                {/* <div className="big">
                     <img
                       src={this.state.images[this.state.currentImageIndex]}
                       alt="img"
                     ></img>
                   </div> */}
-                                    <div className="price">Price: {this.state.price} $</div>
-                                    <div className="price">Available: {this.state.inStock}</div>
-                                    <div className="numberBar">
-                                        <div className="titleNumber">Number</div>
-                                        <button className="nBtn" onClick={this.handleDecrement}>
-                                            -
-                                        </button>
-                                        <span className="number">{this.state.count}</span>
-                                        <button className="nBtn" onClick={this.handleIncrement}>
-                                            +
-                                        </button>
-                                    </div>
-                                    <div className="addCartOrBuy">
-                                        <button className="addToCart" onClick={this.handleClick}>
-                                            <i className="bi bi-cart"></i>
-                                            Add to cart
-                                        </button>
-                                        <button className="buyNow" onClick={this.handleBuyNow}>
-                                            Buy now
-                                        </button>
-                                    </div>
+                                <div
+                                    className="price">Price: {(this.state.price - this.state.price * this.state.discount / 100).toFixed(2)} $
+                                </div>
+                                <div className="price">Available: {this.state.inStock}</div>
+                                <div className="numberBar">
+                                    <button className="nBtn" onClick={this.handleDecrement}>
+                                        -
+                                    </button>
+                                    <span className="number px-3">{this.state.count}</span>
+                                    <button className="nBtn" onClick={this.handleIncrement}>
+                                        +
+                                    </button>
+                                </div>
+                                <div className="addCartOrBuy">
+                                    <button className="addToCart" onClick={this.handleClick}>
+                                        <i className="bi bi-cart-plus"></i>Add to cart
+                                    </button>
+                                    <button className="buyNow" onClick={this.handleBuyNow}>
+                                        Buy now
+                                    </button>
                                 </div>
                             </div>
-                        ) : (
-                            <section className="container">
-                                <div className="text-center empty">
-                                    <h2>(╥﹏╥) {this.state.statusCode} error!</h2>
-                                    <h5>Perhaps you should try viewing other books!</h5>
-                                </div>
-                            </section>
-                        )}
-                    </div>
-                    <Footer/>
-                </>
+                        </div>
+                    ) : (
+                        <section className="container">
+                            <div className="text-center empty">
+                                <h2>(╥﹏╥) {this.state.statusCode} error!</h2>
+                                <h5>Perhaps you should try viewing other books!</h5>
+                            </div>
+                        </section>
+                    )}
+                </div>
             );
         } else {
             return (
-                <>
-                    <Header/>
-                    <NotFound
-                        title="(╥﹏╥) Book not existed!"
-                        details="Perhaps you should try viewing other books!"
-                    />
-                    <Footer/>
-                </>
+                <NotFound title="(˚ ˃̣̣̥⌓˂̣̣̥ ) Book not existed!" details="Perhaps you should try viewing other books!"
+                />
             );
         }
     }

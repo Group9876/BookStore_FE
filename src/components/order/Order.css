@@ -1,6 +1,6 @@
 .checkoutContainer {
     display: flex;
-    margin-top: 50px;
+    margin: 50px 0;
 }
 
 .amount {
@@ -18,16 +18,12 @@
     width: 50%;
     /* margin: 50px; */
     padding-left: 50px;
-    padding-right: 50px;
     display: block;
-    text-align: center;
-
 }
 
 .userInfo input {
     width: 100%;
     height: 30px;
-    margin-top: 10px;
     margin-bottom: 10px;
 
 }
@@ -44,7 +40,7 @@
 
 .productInfo {
     border-radius: 5px;
-    padding: 10px;
+    padding: 20px;
     border: 2px #33cc66 solid;
 }
 
@@ -55,7 +51,8 @@
 }
 
 .contentProductInfo img {
-    margin-right: 30px;
+    margin-right: 0px;
+    object-fit: cover;
 }
 
 .contentProductInfo h4 {
@@ -80,7 +77,7 @@
 .line {
     box-shadow: 10px 10px 5px rgba(51, 204, 102, 0.29);
     margin: 20px;
-    padding: 10px;
+    padding: 20px;
     border: solid #33cc66;
     position: relative;
 }
@@ -88,14 +85,18 @@
 .order_item {
     width: 800px;
     border: solid #33cc66 2px;
-    margin: auto;
     padding: 10px;
+    margin: auto auto 30px;
+}
+
+.no_bot {
+    border-bottom: none;
 }
 
 .item {
     display: flex;
     width: auto;
-    margin: 10px;
+    margin: 5px;
     border-bottom: none;
 }
 
@@ -106,8 +107,8 @@
 }
 
 .name_cat {
-    width: 40%;
-    padding-left: 30px;
+    width: 50%;
+    padding: 0 30px 0 20px;
 }
 
 .price_quant {
@@ -126,10 +127,18 @@ button:hover {
 }
 
 .numberOfItem {
-    font-size: 15px;
-    color: #33cc66;
     position: absolute;
+    top: 2px;
+    left: 30px;
+    text-align: center;
+    background: red;
+    border-radius: 100%;
+    width: 25px;
+    height: 25px;
+    font-size: 15px;
+    color: #ffffff;
     z-index: 999;
+    font-style: normal;
 }
 
 .active-link {
@@ -142,23 +151,38 @@ button:hover {
 
 
 .checkout {
-    border-color: #33cc33;
     width: 90%;
     margin: 0;
+    border: 2px solid #33cc33;
 }
 
 .out {
     background-color: white;
     border: 2px solid #33cc33;
     width: 100%;
+    text-align: start;
 }
 
-.form {
-    padding: 20px;
+.checkoutForm {
+    padding: 15px 30px 30px 30px;
+    margin-right: 0;
+    border: #00ad33 solid 2px;
+}
+
+.checkoutBtn {
+    background-color: #33cc66;
+    margin: 10px;
+    padding: 8px 20px;
+    border: none;
+}
+
+.checkoutBtn:hover {
+    background-color: rgba(70, 255, 100, 1);
+    color: white;
 }
 
 .enter {
-    border-width: 2px;
+    border: 2px solid #33cc33;
     width: 100%
 }
 

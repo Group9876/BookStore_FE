@@ -28,24 +28,25 @@ function Footer() {
             <hr></hr>
             <div className="container">
                 <div className="row">
-                    <div>
+                    <div className="col-6 px-5">
                         <h3>Contact Us</h3>
-                        <p>Tel:(84-24) 38544338</p>
-                        <p>Address:Km 9, đường Nguyễn Trãi, quận Nam Từ Liêm, Hà Nội, Việt Nam</p>
+                        <p>Tel: (84-24) 38544338</p>
+                        <p>Address: Km9, đường Nguyễn Trãi, quận Nam Từ Liêm, Hà Nội, Việt Nam</p>
                         <p>Email: hanu@hanu.edu.vn | tuyensinh@hanu.edu.vn</p>
                         <ul>
-                            <li><a href="/#"><i className="bi bi-facebook"></i></a></li>
-                            <li><a href="/#"><i className="bi bi-instagram"></i></a></li>
-                            <li><a href="/#"><i className="bi bi-tiktok"></i></a></li>
+                            <li><a href="/public#"><i className="bi bi-facebook"></i></a></li>
+                            <li><a href="/public#"><i className="bi bi-instagram"></i></a></li>
+                            <li><a href="/public#"><i className="bi bi-tiktok"></i></a></li>
                         </ul>
                     </div>
-                    <div>
+                    <div className="col-4 p-0">
                         <h3>About Us</h3>
-                        <p>This is where you can buy any book you want</p>
+                        <p>This is where you can buy any book you want!</p>
                     </div>
-                    <div>
+                    <div className="col-2 p-0">
                         <h3>Our partners</h3>
-                        <p>Hanoi university</p>
+                        <p>Bookworm Group</p>
+                        <p>FIT, Hanoi University</p>
                     </div>
                 </div>
             </div>

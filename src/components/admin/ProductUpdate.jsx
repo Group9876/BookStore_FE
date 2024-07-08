@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
-import req, {be_url, fe_url, role} from "../others/Share";
-import NotFound from "../others/NotFound";
-import Header from "../header/Header";
-import Footer from "../footer/Footer";
+import req, {be_url, fe_url, role} from "../share/Share";
+import NotFound from "../share/notfound/NotFound";
+import Header from "../share/header/Header";
+import Footer from "../share/footer/Footer";
 import axios from 'axios';
 import ImageUploading from "react-images-uploading";
 
@@ -14,27 +14,23 @@ export default function ProductUpdate() {
     const [product, setProduct] = useState({
         name: "",
         description: "",
-        price: "",
-        inStock: "",
+        price: 0,
+        inStock: 0,
         images: [],
         category: "",
-        discount: "",
+        discount: 0,
     });
+    const [uploadImages, setUploadImages] = useState([])
 
     const logout = async () => {
         await axios.post(`${be_url}logout`).then((res) => {
             if (res.status === 200) {
                 localStorage.clear()
-                this.setState({
-                    accessToken: null
-                })
-                window.location = "/"
+                alert("Logout successfully!")
+                window.location = "/home"
             }
-
         })
     }
-
-    const formData = new FormData();
 
     useEffect(() => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -50,77 +46,59 @@ export default function ProductUpdate() {
     };
 
     const handleImageUpload = (imageList) => {
-        for (let i = 0; i < imageList.length; i++) {
-            formData.append("image", imageList[i].file);
-            console.log("Image uploaded!");
-            // console.log(imageList[i].file.type);/
-        }
-        setProduct({...product, images: imageList});
-        // console.log("Product images uploaded!");
+        setUploadImages(imageList)
+        console.log("Product images uploaded!");
     };
 
     const submitForm = (e) => {
-        let productUpdated = product;
-        productUpdated.images = []
         e.preventDefault();
-        req.put(`${be_url}admin/product/${id}`, productUpdated).then((res) => {
-            console.log("Form submit!")
+        req.put(`${be_url}admin/product/${id}`, product).then((res) => {
+            submitProductImages();
         });
     };
 
-    const submitProductImages = (e) => {
-        if (images) {
-            // formData.append("productImages", images.file);
-            for (let i = 0; i < images.length; i++) {
-                if (images[i].file) {
-                    formData.append("image", images[i].file);
-                }  
-                // console.log("Image uploaded!");
-                // console.log(images[i].file.type);
+    const submitProductImages = () => {
+        const formData = new FormData();
+        if (uploadImages && uploadImages.length !== 0) {
+            for (let i = 0; i < uploadImages.length; i++) {
+                if (uploadImages[i].file) {
+                    formData.append("images", uploadImages[i].file);
+                }
             }
-            console.log("Submit product images!");
-            if (formData.get("image")) {
-                req.post(`${be_url}admin/product-image-upload/${id}`, formData, {
-                    headers: {
-                        "Content-Type": "multipart/form-data",
-                    },
-                })
-                    .then(
-                        (res) => {
-                            window.location = "/admin/products";
-                        },
-                        (error) => {
-                            console.log(error);
-                        }
-                    );
-            } else {
-                window.location = "/admin/products";
-            }
+            req.put(`${be_url}admin/product/image-upload/${id}`, formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            }).then(
+                (res) => {
+                    alert("Images updated!")
+                    window.location = "/admin/products";
+                },
+                (error) => {
+                    console.log(error);
+                }
+            );
+
         } else {
+            alert("Products updated!")
             window.location = "/admin/products";
         }
     };
 
-    //   const response = await fetch(`${be_url}admin/product-image-upload/${id}`, {
-    //     method: "POST",
-    //     headers: {
-    //       'Content-Type': 'multipart/form-data'
-    //     },
-    //     body: formData,
-    //   });
-    //   const contentType = response.headers.get("content-type");
-    //   console.log(contentType);
-    // }
-
     let fetchProductList = async () => {
         await req.get(be_url + "product/" + id).then((res) => {
-            const products = res.data;
-            setProduct(products);
+            console.log("Fetch product list.")
+            setProduct({products: res.data.data});
         });
     };
 
+    const onUrlRemove = (index) => {
+        let imagesList = product.images;
+        imagesList.splice(index, 1)
+        setProduct({...product, images: imagesList})
+    }
 
-    if (role === "ROLE_ADMIN") {
+    if (role() === "ROLE_ADMIN") {
         return (
             <div className="container">
                 {/*aside*/}
@@ -128,58 +106,58 @@ export default function ProductUpdate() {
                     <div className="col-3">
                         <aside className="admin-aside">
                             <div className="web-name">
-                                <a href={fe_url}><img className="admin-logo" src="/images/icon.jpg"
-                                                      alt="logo"/><span>PRO BOOKSTORE</span></a>
-
+                                <a href={fe_url + 'home'}><img className="admin-logo" src="/images/account.jpg"
+                                                               alt="logo"/>&nbsp;
+                                    <span>PRO BOOKSTORE</span></a>
 
                             </div>
-                            <a className="admin-navigation  current-pos" href={fe_url + "admin/products"}>Manage
+                            <a className="admin-navigation current-pos" href={fe_url + "admin/products"}>Manage
                                 books</a>
                             <div className="dropdown">
-                                <a className="admin-navigation" href={fe_url + "admin/orders"}>Manage
+                                <a className="admin-navigation"
+                                   href={fe_url + "admin/orders/1?status=customer_confirmed"}>Manage
                                     orders <i className="bi bi-chevron-down dropdown_icon"></i></a>
                                 <div className="dropdown-content">
-                                    <a href={fe_url + "admin/orders?status=customer_confirmed"}>Checked
-                                        out</a>
-                                    <a href={fe_url + "admin/orders?status=admin_preparing"}>Preparing</a>
-                                    <a href={fe_url + "admin/orders?status=shipping"}>Shipping</a>
-                                    <a href={fe_url + "admin/orders?status=customer_request_cancel"}>Cancel
-                                        request</a>
-                                    <a href={fe_url + "admin/orders?status=success"}>Success</a>
+                                    <a href={fe_url + "admin/orders?status=customer_confirmed"}>Checked out
+                                        orders</a>
+                                    <a href={fe_url + "admin/orders?status=admin_preparing"}>Preparing orders</a>
+                                    <a href={fe_url + "admin/orders?status=shipping"}>Shipping orders</a>
+                                    <a href={fe_url + "admin/orders?status=customer_request_cancel"}>Canceling
+                                        orders</a>
+                                    <a href={fe_url + "admin/orders?status=canceled"}>Canceled orders</a><a
+                                    href={fe_url + "admin/orders?status=success"}>Successful orders</a>
                                 </div>
                             </div>
-                            <a className="admin-navigation" href={fe_url + "admin/vouchers"}>Manage
-                                vouchers</a>
+                            <a className="admin-navigation" href={fe_url + "admin/vouchers"}>Manage vouchers</a>
                         </aside>
                     </div>
                     {/*header*/}
                     <div className="col-9">
                         <article className="admin-header">
-                            <span className="welcome">Welcome ADMIN!</span>&nbsp;&nbsp;
-                            <span onClick={logout} className="bi bi-box-arrow-right"/>
+                            <span className="welcome">Welcome ADMIN!</span>&nbsp;
+                            <span onClick={logout} className="bi bi-box-arrow-right"/>&nbsp;
                         </article>
                         {/*admin*/}
                         <article className="admin-body">
                             <div className="container text-center mt-3 mb-5">
-                                <h3 className=" text-primary- p-2 ">
+                                <h2 className="p-2">
                                     UPDATE BOOK
-                                </h3>
-                                <form className="form add card " onSubmit={(e) => {
+                                </h2>
+                                <form className="form add card text-left p-4" onSubmit={(e) => {
                                     submitForm(e);
-                                    submitProductImages(e);
                                 }}>
-                                    <label className=" h6 guide">Name</label>
+                                    <label className="h6 guide">Name</label>
                                     <input type="text" className="form-control enter" id="name" value={name}
                                            required
                                            onChange={(e) => handleChange(e)}/>
 
-                                    <label className=" h6 guide">Description</label>
-                                    <input type="text" className="form-control enter" id="description"
-                                           value={description} required
-                                           onChange={(e) => handleChange(e)}/>
+                                    <label className="h6 guide">Description</label>
+                                    <textarea className="form-control enter" id="description"
+                                              value={description} required rows="5"
+                                              onChange={(e) => handleChange(e)}/>
 
                                     <label className="h6 guide">Price</label>
-                                    <input type="number" min="0" className="form-control enter" id="price"
+                                    <input type="number" min="0" className="form-control enter" id="price" step="0.1"
                                            value={price}
                                            required
                                            onChange={(e) => handleChange(e)}/>
@@ -195,59 +173,54 @@ export default function ProductUpdate() {
                                     <div>
                                         <ImageUploading
                                             multiple
-                                            value={images}
+                                            value={uploadImages}
                                             onChange={handleImageUpload}
-                                            maxNumber={10}
-                                            dataURLKey="data_url"
+                                            maxNumber={18}
                                         >
-                                            {({onImageUpload, onImageRemoveAll, onImageRemove}) => (
+                                            {({onImageUpload, onImageRemove}) => (
                                                 <div className="upload__image-wrapper">
-                                                    <button
-                                                        type="button"
-                                                        className="btn btn-primary"
-                                                        onClick={onImageUpload}
-                                                    >
-                                                        Upload Images
-                                                    </button>
-                                                    &nbsp;
-                                                    <button
-                                                        type="button"
-                                                        className="btn btn-danger"
-                                                        onClick={onImageRemoveAll}
-                                                    >
-                                                        Remove All
-                                                    </button>
                                                     {images && images.map((image, index) => (
-                                                        <div key={index} className="image-item">
-                                                            {image['data_url'] ? (<img
-                                                                src={image["data_url"]}
-                                                                alt=""
-                                                                width="100"
-                                                                height="100"
-                                                            />) : (<img
+                                                        <span className="image-item" key={index}>
+                                                            <img
                                                                 src={image}
                                                                 alt=""
                                                                 width="100"
                                                                 height="100"
-                                                            />)}
-                                                            <div className="image-item__btn-wrapper">
-                                                                <button
-                                                                    type="button"
-                                                                    className="btn btn-danger"
-                                                                    onClick={() => onImageRemove(index)}
-                                                                >
-                                                                    Remove
-                                                                </button>
-                                                            </div>
-                                                        </div>
+                                                            />
+                                                            <i className="bi bi-trash3 top-right"
+                                                               onClick={() => onUrlRemove(index)}
+                                                            ></i>
+                                                        </span>
                                                     ))}
+                                                    {uploadImages && uploadImages.map((image, index) => (
+                                                        <span className="image-item" key={index}>
+                                                            <img
+                                                                src={image.dataURL}
+                                                                alt=""
+                                                                width="100"
+                                                                height="100"
+                                                            />
+                                                            <i className="bi bi-trash3 top-right"
+                                                               onClick={() => onImageRemove(index)}
+                                                            ></i>
+                                                        </span>
+                                                    ))}
+                                                    <div className="mt-2">
+                                                        <button
+                                                            type="button"
+                                                            className="btn btn-outline-success"
+                                                            onClick={onImageUpload}
+                                                        >
+                                                            Upload Images
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             )}
                                         </ImageUploading>
                                     </div>
 
 
-                                    <label className=" h6 guide ">Category</label>
+                                    <label className="h6 guide ">Category</label>
                                     <select className="form-control enter" id="category" value={category}
                                             required
                                             onChange={(e) => handleChange(e)}>
@@ -266,11 +239,9 @@ export default function ProductUpdate() {
                                            value={discount} required
                                            onChange={(e) => handleChange(e)}/>
 
-                                    <div className="btnSubmit">
-                                        <button type="submit" className="btn btn-primary  bg-success">Update
-                                            Book
+                                    <div className="btnSubmit mt-3">
+                                        <button type="submit" className="btn checkoutBtn mx-0">Update book
                                         </button>
-
                                     </div>
                                 </form>
                             </div>

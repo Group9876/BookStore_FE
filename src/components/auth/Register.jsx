@@ -2,9 +2,7 @@ import React, {Component} from 'react'
 import {Button} from 'react-bootstrap'
 import axios from 'axios';
 import './Auth.css'
-import {be_url} from '../others/Share';
-import Header from "../header/Header";
-import Footer from "../footer/Footer";
+import {be_url} from '../share/Share';
 
 export default class Register extends Component {
     state = {
@@ -36,7 +34,6 @@ export default class Register extends Component {
         }
         axios.post(this.url, Account)
             .then(res => {
-                console.log(res)
                 if (res.data.code === '201') {
                     window.location = "/login";
                     alert("Registered successfully!")
@@ -46,6 +43,7 @@ export default class Register extends Component {
 
             })
             .catch((error) => {
+                console.log(error)
                 if (error.response.data.errors) {
                     alert(error.response.data.errors[0].defaultMessage)
                 } else {
@@ -56,11 +54,10 @@ export default class Register extends Component {
 
     render() {
         return (<>
-            <Header/>
             <div className="auth-wrapper">
                 <div className="auth-inner">
                     <form onSubmit={this.handleSubmit}>
-                        <h3>Register</h3>
+                        <h3>REGISTER ACCOUNT</h3>
                         <div className="mb-3">
                             <label>Username</label>
                             <input
@@ -95,14 +92,13 @@ export default class Register extends Component {
                             />
                         </div>
                         <div className="d-grid">
-                            <Button type="submit" className="btn" variant="outline-dark">
+                            <Button type="submit" className="btn checkoutBtn m-0" variant="outline-dark">
                                 Submit
                             </Button>
                         </div>
                     </form>
                 </div>
             </div>
-            <Footer/>
         </>)
     }
 }

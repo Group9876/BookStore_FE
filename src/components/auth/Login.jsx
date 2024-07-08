@@ -2,9 +2,7 @@ import React, {Component} from 'react';
 import {Button} from 'react-bootstrap';
 import axios from 'axios';
 import './Auth.css';
-import {be_url} from '../others/Share';
-import Header from "../header/Header";
-import Footer from "../footer/Footer";
+import {be_url} from '../share/Share';
 
 export default class Login extends Component {
     state = {
@@ -22,11 +20,6 @@ export default class Login extends Component {
 
     handleSubmit = event => {
         event.preventDefault();
-        event.target.reset();
-        this.setState({
-            username: '',
-            password: ''
-        })
         const Account = {
             username: this.state.username,
             password: this.state.password
@@ -38,24 +31,32 @@ export default class Login extends Component {
                 localStorage.setItem("role", res.data.role);
                 if (res.status === 200) {
                     if (res.data.role === "ROLE_ADMIN") {
+                        console.log("Login successfully!")
                         window.location = "/admin/products"
                     } else if (res.data.role === "ROLE_CUSTOMER") {
-                        window.location = "/";
+                        console.log("Login successfully!")
+                        window.location = "/home";
                     }
                 }
+                event.target.reset();
+                this.setState({
+                    username: '',
+                    password: ''
+                })
             })
             .catch((error) => {
+                console.log(error)
                 alert("Invalid username or password!")
             })
     }
 
     render() {
         return (<>
-                <Header/>
+
                 <div className="auth-wrapper">
                     <div className="auth-inner">
                         <form onSubmit={this.handleSubmit}>
-                            <h3>Login</h3>
+                            <h3>LOGIN TO ACCOUNT</h3>
                             <div className="mb-3">
                                 <label>Username</label>
                                 <input
@@ -79,14 +80,13 @@ export default class Login extends Component {
                                 />
                             </div>
                             <div className="d-grid">
-                                <Button type="submit" className="btn" variant="outline-dark">
-                                    Submit
+                                <Button type="submit" className="btn checkoutBtn m-0" variant="outline-dark">
+                                    Login
                                 </Button>
                             </div>
                         </form>
                     </div>
                 </div>
-                <Footer/>
             </>
         )
     }

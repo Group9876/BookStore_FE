@@ -15,12 +15,17 @@
 .title {
     text-align: center;
     display: block;
+    padding: 10px 0;
 }
 
 .btnconfirm {
     text-align: center;
     display: block;
     margin-top: 20px;
+}
+
+.voucher {
+    text-align: left;
 }
 
 .nameinbill {

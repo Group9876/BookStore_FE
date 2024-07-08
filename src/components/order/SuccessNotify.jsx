@@ -1,44 +1,57 @@
 import React from "react";
 import withRouter from "../product/WithRouter";
 import "./Bill.css"
-import {fe_url, role} from "../others/Share";
-import Header from "../header/Header";
-import NotFound from "../others/NotFound";
-import Footer from "../footer/Footer";
+import req, {be_url, userId} from "../share/Share";
 
 class SuccessNotify extends React.Component {
 
+    deleteItems = () => {
+        req.delete(be_url + "cart/" + userId())
+            .then(() => {
+                console.log("Cart deleted successfully.");
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
+    componentDidMount() {
+        let dataToCheckout = JSON.parse(localStorage.getItem("dataToCheckout"))
+        if (dataToCheckout)
+            req.post(be_url + "order/" + userId(), dataToCheckout)
+                .then(() => {
+                    if (localStorage.getItem("isFromCart") === "true") {
+                        this.deleteItems();
+                    }
+                    localStorage.removeItem("isFromCart")
+                    localStorage.removeItem("items")
+                    localStorage.removeItem("total")
+                    localStorage.removeItem("dataToCheckout")
+                    localStorage.removeItem("products")
+                    console.log("Saved order.")
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+    }
+
     handleContinue = () => {
-        window.location.href = fe_url
+        window.location = "/home"
     }
 
     render() {
-        if (role === "ROLE_CUSTOMER") {
-            return (
-                <>
-                    <Header/>
-                    <div className="boxinnotif mt-5 mb-5">
-                        <div className="mess pt-3">
-                            <h4>Order succesfully!</h4>
-                        </div>
-                        <div className="text-center pb-3">
-                            <button className="btn-outline-dark" onClick={this.handleContinue}>Continue shopping >>
-                            </button>
-                        </div>
+        return (
+            <div className="boxinnotif mt-5 mb-5">
+                <div className="mess pt-3">
+                    <h4>Order successfully!</h4>
+                </div>
+                <div className="text-center p-3">
+                    <button className="btn-outline-dark px-3" onClick={this.handleContinue}>Continue shopping ➤
+                    </button>
+                </div>
 
-                    </div>
-                    <Footer/>
-                </>
-            )
-        } else {
-            return (
-                <>
-                    <Header/>
-                    <NotFound title='(╥﹏╥) Access denied!' details='You have no permission to access this page!'/>
-                    <Footer/>
-                </>
-            )
-        }
+            </div>
+        )
     }
 }
 
